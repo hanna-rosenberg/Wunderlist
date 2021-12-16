@@ -1,8 +1,8 @@
 <?php
 
 declare(strict_types=1);
-require_once('header.php');
-require_once "config.php";
+require __DIR__ . '/app/autoload.php';
+require __DIR__ . '/views/header.php';
 
 
 ?>
@@ -11,7 +11,7 @@ require_once "config.php";
 <div class="createAccount">
     Create an account:
     <form>
-    </form action="createaccount.php" method="POST">
+    </form action="/app/users/register.php" method="POST">
 
     <label for="name">Name</label>
     <input type="text" id="name" name="name" required>
@@ -26,14 +26,4 @@ require_once "config.php";
 </div>
 
 <?php
-
-if (isset($_POST['name'], $_POST['email'], $_POST['password'])) {
-
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-}
-?>
-
-
-<?php require_once('footer.php'); ?>
+require __DIR__ . '/views/footer.php'; ?>
