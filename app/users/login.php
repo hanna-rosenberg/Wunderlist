@@ -22,7 +22,6 @@ if (isset($_POST['email'], $_POST['password'])) {
         redirect('/login.php');
     }
 
-
     if (password_verify($_POST['password'], $user['password'])) {
 
         unset($user['password']);
@@ -30,7 +29,8 @@ if (isset($_POST['email'], $_POST['password'])) {
         $_SESSION['user'] = [
             'name' => $user['name'],
             'email' => $user['email'],
-            'image' => $user['image']
+            'image' => $user['image'],
+            'id' => $user['id']
         ];
     } else {
         redirect('/login.php');
