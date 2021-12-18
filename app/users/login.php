@@ -23,9 +23,7 @@ if (isset($_POST['email'], $_POST['password'])) {
     }
 
     if (password_verify($_POST['password'], $user['password'])) {
-
         unset($user['password']);
-
         $_SESSION['user'] = [
             'name' => $user['name'],
             'email' => $user['email'],
