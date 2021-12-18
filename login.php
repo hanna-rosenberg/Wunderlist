@@ -4,7 +4,7 @@
 <article>
     <h1>Login</h1>
 
-    <form action="app/users/login.php" method="post">
+    <form action="/app/users/login.php" method="post">
         <div class="mb-3">
             <label for="email">Email</label>
             <input class="form-control" type="email" name="email" id="email" placeholder="francis@darjeeling.com" required>

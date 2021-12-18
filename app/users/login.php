@@ -18,8 +18,12 @@ if (isset($_POST['email'], $_POST['password'])) {
 
     // If we couldn't find the user in the database, redirect back to the login
     // page with our custom redirect function.
+    if (!$user) {
+        redirect('/login.php');
+    }
 
-    if (password_verify($_POST['email'], $_POST['password'])) {
+
+    if (password_verify($_POST['password'], $user['password'])) {
 
         unset($user['password']);
 
@@ -30,7 +34,6 @@ if (isset($_POST['email'], $_POST['password'])) {
         ];
     } else {
         redirect('/login.php');
-        echo "wrong account details";
     }
 }
 
