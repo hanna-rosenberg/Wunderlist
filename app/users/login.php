@@ -23,6 +23,7 @@ if (isset($_POST['email'], $_POST['password'])) {
     }
 
     if (password_verify($_POST['password'], $user['password'])) {
+        //unset the users password to not save it anywhere
         unset($user['password']);
         $_SESSION['user'] = [
             'name' => $user['name'],
