@@ -7,3 +7,7 @@
 .toggle-hidden {
   visibility: visible;
 }
+
+.list-with-tasks {
+  visibility: hidden;
+}
