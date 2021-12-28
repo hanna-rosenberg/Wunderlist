@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 require __DIR__ . '/../autoload.php';
 
+
 if (isset($_POST['taskName'], $_POST['taskDescription'])) {
     $taskName = trim($_POST['taskName']);
     $taskDescription = trim($_POST['taskDescription']);
     $taskDeadline = $_POST['taskDeadline'];
-    // $listId = ;
-    $taskCompleted = false;
+    $taskCompleted = 'false';
+    $listId = $_POST['listId'];
+    $listName = $_POST['listName'];
 
     $statement = $database->prepare('INSERT INTO tasks(task, description, deadline, completed, list_id) VALUES (:task, :description, :deadline, :completed, :list_id)');
     $statement->bindParam(':task', $taskName);
@@ -20,4 +22,4 @@ if (isset($_POST['taskName'], $_POST['taskDescription'])) {
     $statement->execute();
 }
 
-redirect('/');
+redirect('/tasks.php?listId=' . $listId . '&listName=' . $listName);

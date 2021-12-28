@@ -11,7 +11,7 @@ require __DIR__ . '/views/header.php';
 
 <div class="list-with-task">
 
-    <h1>list name placeholder</h1>
+    <h1><?php echo $_GET['listName'] ?> </h1>
 
     Create a task<br>
 
@@ -26,6 +26,10 @@ require __DIR__ . '/views/header.php';
         <label for="taskDeadline">Deadline</label>
         <input type="date" id="taskDeadline" name="taskDeadline">
 
+        <input type="hidden" id="listId" name="listId" value="<?php echo $_GET['listId']; ?>">
+
+        <input type="hidden" id="listName" name="listName" value="<?php echo $_GET['listName']; ?>">
+
         <button type="submit">Create Task</button>
     </form>
     <br>
@@ -33,5 +37,19 @@ require __DIR__ . '/views/header.php';
 
 <?php
 
-echo $_GET['tasks'];
+$statement = $database->prepare('SELECT * FROM tasks WHERE list_id = :list_id');
+$statement->bindParam(':list_id', $_GET['listId']);
+
+$statement->execute();
+
+$tasks = $statement->fetchAll(PDO::FETCH_DEFAULT); ?>
+
+<ul><?php
+    for ($i = 0; $i < count($tasks); $i++) : ?>
+        <li class="task-names"> <?php echo $tasks[$i]['task'] . $tasks[$i]['description'] . $tasks[$i]['deadline'] ?> </li>
+    <?php endfor; ?>
+</ul>
+
+<?php
+
 require __DIR__ . '/views/footer.php';

@@ -29,7 +29,7 @@ $lists = $statement->fetchAll(PDO::FETCH_DEFAULT);
 
 ?> <ul><?php
         for ($i = 0; $i < count($lists); $i++) : ?>
-        <li class="list-names"> <a href="/tasks.php?tasks=<?php echo $lists[$i]['id'] ?>" id="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title']; ?> </a> </li>
+        <li class="list-names"> <a href="/tasks.php?listId=<?php echo $lists[$i]['id'] ?>&listName=<?php echo $lists[$i]['title'] ?>" id="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title']; ?> </a> </li>
     <?php endfor; ?>
 </ul>
 
