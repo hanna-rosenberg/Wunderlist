@@ -1,13 +1,9 @@
 /* In this file you can add your custom styles. */
 
-.toggle-show {
-  visibility: hidden;
+.hidden {
+  display: none;
 }
 
-.toggle-hidden {
-  visibility: visible;
-}
-
-.list-with-tasks {
-  visibility: hidden;
+.visible {
+  display: block;
 }
