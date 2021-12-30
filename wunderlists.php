@@ -6,16 +6,12 @@ require __DIR__ . '/app/autoload.php';
 
 require __DIR__ . '/views/header.php';
 
-
 ?>
 
 <h2>Your lists:</h2>
 <?php
-$statement = $database->prepare('SELECT * FROM lists WHERE user_id = :user_id');
-$statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_STR);
-$statement->execute();
 
-$lists = $statement->fetchAll(PDO::FETCH_DEFAULT);
+$lists = fetchAllLists($database);
 
 ?> <ul><?php
         for ($i = 0; $i < count($lists); $i++) : ?>
@@ -23,6 +19,8 @@ $lists = $statement->fetchAll(PDO::FETCH_DEFAULT);
     <?php endfor; ?>
 </ul>
 
+
+<!--create list form-->
 Create a list<br>
 
 <form action="/app/posts/store.php" method="POST">
@@ -38,6 +36,8 @@ Create a list<br>
 
     <h2>Your tasks:</h2>
     <div class="create-task">
+
+        <!--create task form-->
         Create a task<br>
 
         <form action="/app/posts/store.php" method="POST">
@@ -48,46 +48,65 @@ Create a list<br>
             <label for="taskDescription">Task description</label>
             <textarea id="taskDescription" name="taskDescription" required></textarea>
 
-            <label for="taskDeadline">Deadline</label>
-            <input type="date" id="taskDeadline" name="taskDeadline">
+            <label for="task-Deadline">Deadline</label>
+            <input type="date" id="taskDeadline" name="taskDeadline"><br>
 
-            <button type="submit">Create Task</button>
+            <label for="listSelection">Add task to a list (optional)</label>
+            <select id="listSelection" name="listSelection">
+                <option value=""> </option>
+                <?php
+                for ($i = 0; $i < count($lists); $i++) : ?>
+                    <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
+                <?php endfor; ?>
+            </select>
+
+            <button type="submit" value="submit">Create Task</button>
         </form>
     </div>
 
     <div class="edit-task hidden">
-        <form action="/app/users/edittask.php" method="POST">
+        <!--update task form-->
+        <form action="/app/posts/update.php" method="POST">
 
             <label for="taskName">Update task name</label>
-            <input type="text" id="taskName" name="taskName" required>
+            <input type="text" id="taskName" name="taskName">
 
             <label for="taskDescription">Update task description</label>
-            <textarea id="taskDescription" name="taskDescription" required></textarea>
+            <textarea id="taskDescription" name="taskDescription"></textarea>
 
             <label for="taskDeadline">Update task deadline</label>
             <input type="date" id="taskDeadline" name="taskDeadline">
 
-            <input type="hidden" id="taskId" name="taskId" value="">
+            <label for="listSelection">Move task to list (optional)</label>
+            <select id="listSelection" name="listSelection">
+                <option value="keepInList"> </option>
+                <option value="removeFromList">(Remove from list)</option>
+                <?php
+                for ($i = 0; $i < count($lists); $i++) : ?>
+                    <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
+                <?php endfor; ?>
+            </select>
+            <label for="taskCompleted">Mark as completed?</label>
+            <input type="checkbox" name="taskCompleted" id="taskCompleted" value="">
+
+            <input type="hidden" id="taskId" name="taskId" class="taskId" value="">
 
             <button type="submit">Update Task</button>
-            <br>Or<br>
         </form>
-        <form action="">
-            <button>Delete task</button>
+        <br>Or<br>
+        <!--delete task form-->
+        <form action="/app/posts/delete.php" method="POST">
+            <input type="hidden" id="taskIdtoDelete" name="taskIdToDelete" class="taskId" value="">
+            <button type="submit" class="taskId" value="">Delete task</button>
         </form>
         <br>
         Or
         <br>
+        <!--cancel edit/delete task (will hide the edit and cancel forms)-->
         <button>Cancel</button>
     </div>
     <?php
-
-
-    $statement = $database->prepare('SELECT * FROM tasks WHERE user_id = :user_id');
-    $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_STR);
-    $statement->execute();
-
-    $tasks = $statement->fetchAll(PDO::FETCH_DEFAULT);
+    $tasks = fetchAllTasks($database);
 
     for ($i = 0; $i < count($tasks); $i++) : ?>
         <div class="task">

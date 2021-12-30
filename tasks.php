@@ -35,14 +35,6 @@ require __DIR__ . '/views/header.php';
     <br>
 </div>
 
-<?php
-
-$statement = $database->prepare('SELECT * FROM tasks WHERE list_id = :list_id');
-$statement->bindParam(':list_id', $_GET['listId']);
-
-$statement->execute();
-
-$tasks = $statement->fetchAll(PDO::FETCH_DEFAULT); ?>
 
 <ul><?php
     for ($i = 0; $i < count($tasks); $i++) : ?>
