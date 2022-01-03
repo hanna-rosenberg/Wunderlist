@@ -15,7 +15,7 @@ $lists = fetchAllLists($database);
 
 ?> <ul><?php
         for ($i = 0; $i < count($lists); $i++) : ?>
-        <li class="list-names"> <a href="/tasks.php?listId=<?php echo $lists[$i]['id'] ?>&listName=<?php echo $lists[$i]['title'] ?>" id="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title']; ?> </a> </li>
+        <li class="listNames"> <a href="/tasks.php?listId=<?php echo $lists[$i]['id'] ?>&listName=<?php echo $lists[$i]['title'] ?>" id="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title']; ?> </a> </li>
     <?php endfor; ?>
 </ul>
 
@@ -32,10 +32,8 @@ Create a list<br>
 </form>
 <br>
 
-<div class="tasks-parent">
-
-    <h2>Your tasks:</h2>
-    <div class="create-task">
+<div class="tasksParent">
+    <div class="createTask">
 
         <!--create task form-->
         Create a task<br>
@@ -48,7 +46,7 @@ Create a list<br>
             <label for="taskDescription">Task description</label>
             <textarea id="taskDescription" name="taskDescription" required></textarea>
 
-            <label for="task-Deadline">Deadline</label>
+            <label for="taskDeadline">Deadline</label>
             <input type="date" id="taskDeadline" name="taskDeadline"><br>
 
             <label for="listSelection">Add task to a list (optional)</label>
@@ -64,21 +62,24 @@ Create a list<br>
         </form>
     </div>
 
-    <div class="edit-task hidden">
+    <div class="editTask hidden">
+        <div id="editTaskTitle">
+            <h2>test</h2>
+        </div>
         <!--update task form-->
         <form action="/app/posts/update.php" method="POST">
 
-            <label for="taskName">Update task name</label>
-            <input type="text" id="taskName" name="taskName">
+            <label for="editTaskName">Update task name</label>
+            <input type="text" id="editTaskName" name="editTaskName" value="" required>
 
-            <label for="taskDescription">Update task description</label>
-            <textarea id="taskDescription" name="taskDescription"></textarea>
+            <label for="editTaskDescription">Update task description</label>
+            <textarea id="editTaskDescription" name="editTaskDescription"></textarea>
 
-            <label for="taskDeadline">Update task deadline</label>
-            <input type="date" id="taskDeadline" name="taskDeadline">
+            <label for="editTaskDeadline">Update task deadline</label>
+            <input type="date" id="editTaskDeadline" name="editTaskDeadline">
 
-            <label for="listSelection">Move task to list (optional)</label>
-            <select id="listSelection" name="listSelection">
+            <label for="editListSelection">Move task to list (optional)</label>
+            <select id="editListSelection" name="editListSelection">
                 <option value="keepInList"> </option>
                 <option value="removeFromList">(Remove from list)</option>
                 <?php
@@ -86,36 +87,37 @@ Create a list<br>
                     <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
                 <?php endfor; ?>
             </select>
-            <label for="taskCompleted">Mark as completed?</label>
-            <input type="checkbox" name="taskCompleted" id="taskCompleted" value="">
+            <label for="editTaskCompleted">Mark as completed?</label>
+            <input type="checkbox" name="editTaskCompleted" id="editTaskCompleted" value="">
 
-            <input type="hidden" id="taskId" name="taskId" class="taskId" value="">
+            <input type="hidden" id="editTaskId" name="editTaskId" class="editTaskId" value="">
 
             <button type="submit">Update Task</button>
         </form>
         <br>Or<br>
         <!--delete task form-->
         <form action="/app/posts/delete.php" method="POST">
-            <input type="hidden" id="taskIdtoDelete" name="taskIdToDelete" class="taskId" value="">
-            <button type="submit" class="taskId" value="">Delete task</button>
+            <input type="hidden" id="taskIdtoDelete" name="taskIdToDelete" class="editTaskId" value="">
+            <button type="submit" class="editTaskId" value="">Delete task</button>
         </form>
         <br>
         Or
         <br>
         <!--cancel edit/delete task (will hide the edit and cancel forms)-->
-        <button>Cancel</button>
+        <button id="cancel">Cancel</button>
     </div>
+    <h2>Your tasks:</h2>
     <?php
     $tasks = fetchAllTasks($database);
 
     for ($i = 0; $i < count($tasks); $i++) : ?>
         <div class="task">
             <article>
-                <div><b><?php echo $tasks[$i]['task'] ?></b></div>
-                <div><?php echo $tasks[$i]['description'] ?></div>
+                <div class="taskTitle"><b><?php echo $tasks[$i]['task'] ?></b></div>
+                <div class="taskDescription"><?php echo $tasks[$i]['description'] ?></div>
                 <div>Deadline: <?php echo $tasks[$i]['deadline'] ?></div>
                 <div>Completed: <?php echo $tasks[$i]['completed'] ?></div>
-                <button class="edit-task-button" value="<?php echo $tasks[$i]['id'] ?>">Edit</button>
+                <button class="editTaskButton" name="<?php echo $tasks[$i]['task'] ?>" id="<?php echo $tasks[$i]['id'] ?>" value="<?php echo $tasks[$i]['description'] ?>">Edit</button>
             </article>
         <?php endfor; ?>
         </div>

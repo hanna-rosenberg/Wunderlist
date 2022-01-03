@@ -25,7 +25,7 @@ if (isset($_FILES['avatar'])) {
         //match the user ID and insert the image url to the correct user
         $statement = $database->prepare('UPDATE users SET image = :image WHERE id = :id');
         $statement->bindParam(':id', $_SESSION['user']['id'], PDO::PARAM_STR);
-        $statement->bindParam(':image', $fileUrl);
+        $statement->bindParam(':image', $fileUrl, PDO::PARAM_STR);
         $statement->execute();
         redirect('/account.php');
     } else {

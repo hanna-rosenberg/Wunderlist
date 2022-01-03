@@ -17,12 +17,12 @@ if (isset($_POST['taskName'], $_POST['taskDescription'])) {
     $listId = $_POST['listSelection'];
 
     $statement = $database->prepare('INSERT INTO tasks(task, description, deadline, completed, user_id, list_id) VALUES (:task, :description, :deadline, :completed, :user_id, :list_id)');
-    $statement->bindParam(':task', $taskName);
-    $statement->bindParam(':description', $taskDescription);
-    $statement->bindParam(':deadline', $taskDeadline);
-    $statement->bindParam(':completed', $taskCompleted);
-    $statement->bindParam(':user_id', $userId);
-    $statement->bindParam(':list_id', $listId);
+    $statement->bindParam(':task', $taskName, PDO::PARAM_STR);
+    $statement->bindParam(':description', $taskDescription, PDO::PARAM_STR);
+    $statement->bindParam(':deadline', $taskDeadline, PDO::PARAM_STR);
+    $statement->bindParam(':completed', $taskCompleted, PDO::PARAM_BOOL);
+    $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    $statement->bindParam(':list_id', $listId, PDO::PARAM_INT);
     $statement->execute();
 }
 
@@ -32,8 +32,8 @@ if (isset($_POST['listName'])) {
     $listName = trim($_POST['listName']);
     $userId = $_SESSION['user']['id'];
     $statement = $database->prepare('INSERT INTO lists(title, user_id) VALUES (:title, :user_id)');
-    $statement->bindParam(':title', $listName);
-    $statement->bindParam(':user_id', $userId);
+    $statement->bindParam(':title', $listName, PDO::PARAM_STR);
+    $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
     $statement->execute();
 }
 
