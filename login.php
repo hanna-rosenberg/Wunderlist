@@ -4,7 +4,6 @@
 
 <article>
     <h1>Login</h1>
-
     <form action="/app/users/login.php" method="post">
         <div class="mb-3">
             <label for="email">Email</label>
@@ -19,6 +18,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Login</button>
+        <?php dialogues($dialogues); ?>
     </form>
 </article>
 

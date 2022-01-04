@@ -19,6 +19,7 @@ if (isset($_POST['email'], $_POST['password'])) {
     // If we couldn't find the user in the database, redirect back to the login
     // page with our custom redirect function.
     if (!$user) {
+        $_SESSION['dialogues'][] = 'The login information was invalid. Please try again.';
         redirect('/login.php');
     }
 
@@ -32,10 +33,10 @@ if (isset($_POST['email'], $_POST['password'])) {
             'id' => $user['id']
         ];
     } else {
+        $_SESSION['dialogues'][] = 'The login information was invalid. Please try again.';
         redirect('/login.php');
     }
+    $_SESSION['dialogues'][] = 'Successfully logged in.';
 }
 
-// We should put this redirect in the end of this file since we always want to
-// redirect the user back from this file. We don't know
 redirect('/');

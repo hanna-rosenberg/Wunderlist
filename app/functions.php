@@ -28,3 +28,13 @@ function fetchAllLists($database)
     $lists = $statement->fetchAll(PDO::FETCH_DEFAULT);
     return $lists;
 }
+
+//store messages to user, such as errors and confirmation dialogues.
+function dialogues($dialogues)
+{
+    $dialogues = $_SESSION['dialogues'];
+    foreach ($dialogues as $dialogue) {
+        echo  $dialogue;
+    };
+    unset($_SESSION['dialogues']);
+}
