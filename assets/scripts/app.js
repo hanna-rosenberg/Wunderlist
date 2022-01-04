@@ -14,7 +14,7 @@ const editTaskTitle = document.getElementById('editTaskTitle');
 const editTaskDescription = document.getElementById('editTaskDescription');
 // task name text box in the edit form:
 const taskName = document.getElementById('editTaskName');
-
+// current task description
 const taskDescription = document.querySelectorAll('.taskDescription');
 
 //When clicking on Edit button under tasks this happens: Create task form goes hidden. Edit task form appears. The value of the edit button is set to the task ID and is copied to the hidden task ID value in the edit form.
@@ -36,9 +36,3 @@ editTaskButtons.forEach((editTaskButton) => {
     createTask.classList.remove('hidden');
   });
 });
-
-//<label for="editTaskName">Update task name</label>
-//<input type="text" id="editTaskName" name="editTaskName" value="" required>
-//
-//<label for="editTaskDescription">Update task description</label>
-//<textarea id="editTaskDescription" name="editTaskDescription" required></textarea>

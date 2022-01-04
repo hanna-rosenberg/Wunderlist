@@ -38,3 +38,20 @@ function dialogues($dialogues)
     };
     unset($_SESSION['dialogues']);
 }
+
+function checkUserLoginStatus()
+{
+    if (is_null($_SESSION['user'])) {
+        redirect('/login.php');
+    }
+}
+
+function userAvatar()
+{
+    if (is_null($_SESSION['user']['image'])) {
+        $userAvatar = '/uploads/placeholder.jpg';
+        return $userAvatar;
+    } else {
+        return $_SESSION['user']['image'];
+    }
+}

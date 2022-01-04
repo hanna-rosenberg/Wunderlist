@@ -30,13 +30,13 @@ if (isset($_POST['email'], $_POST['password'])) {
             'name' => $user['name'],
             'email' => $user['email'],
             'image' => $user['image'],
-            'id' => $user['id']
+            'id' => $user['id'],
         ];
+        $_SESSION['dialogues'][] = 'Successfully logged in.';
     } else {
         $_SESSION['dialogues'][] = 'The login information was invalid. Please try again.';
         redirect('/login.php');
     }
-    $_SESSION['dialogues'][] = 'Successfully logged in.';
 }
 
 redirect('/');

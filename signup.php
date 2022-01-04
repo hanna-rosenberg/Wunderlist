@@ -25,6 +25,7 @@ require __DIR__ . '/views/header.php';
 
         <button type="submit">Create Account</button>
     </form>
+    <?php dialogues($dialogues); ?>
 </div>
 
 <?php

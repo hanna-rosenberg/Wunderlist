@@ -5,7 +5,7 @@ declare(strict_types=1);
 require __DIR__ . '/app/autoload.php';
 
 require __DIR__ . '/views/header.php';
-
+checkUserLoginStatus();
 ?>
 
 <h2>Your lists:</h2>

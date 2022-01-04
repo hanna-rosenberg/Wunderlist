@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/app/autoload.php';
 require __DIR__ . '/views/header.php';
-
+checkUserLoginStatus();
 
 ?>
 
@@ -12,7 +12,7 @@ require __DIR__ . '/views/header.php';
 <h3>Email</h3> <?php echo $_SESSION['user']['email'];  ?>
 <!-- change email form -->
 
-<form action="/app/users/changeemail.php" method="POST">
+<form action="/app/users/updateaccount.php" method="POST">
 
     <label for="email">New email:</label>
     <input type="email" id="email" name="email" required>
@@ -27,7 +27,7 @@ require __DIR__ . '/views/header.php';
 <!-- change password form -->
 
 
-<form action="/app/users/changepassword.php" method="POST">
+<form action="/app/users/updateaccount.php" method="POST">
 
     <label for="password">New password:</label>
     <input type="password" id="password" name="password" required>
@@ -37,10 +37,10 @@ require __DIR__ . '/views/header.php';
 
 
 
-<h3>Avatar</h3> <img src="<?php echo $_SESSION['user']['image']; ?>">
+<h3>Avatar</h3> <img src="<?php echo userAvatar(); ?>">
 
 <!-- change password form -->
-<form action="/app/users/changeavatar.php" method="post" enctype="multipart/form-data">
+<form action="/app/users/updateaccount.php" method="post" enctype="multipart/form-data">
     <div>
         <label for="avatar">Choose a PNG/JPG image to upload</label>
         <input type="file" name="avatar" id="avatar" required>
@@ -48,8 +48,7 @@ require __DIR__ . '/views/header.php';
     <button type="submit" class="change-avatar">Upload</button>
 </form>
 
-
 <br>
-<?php echo $_SESSION['user']['id']; ?>
+<?php dialogues($dialogues); ?>
 <?php
 require __DIR__ . '/views/footer.php'; ?>
