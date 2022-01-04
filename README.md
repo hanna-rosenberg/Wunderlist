@@ -2,7 +2,7 @@
 
 # Wunderlist
 
-This is the final project of 2021 in web development at Yrgo. The aim is to create a website where a user can sign up, log in and create lists and tasks. The website is built using php, javascript and css.
+This is the final project of 2021 in the web development course at Yrgo (WU21). The aim is to create a website where a user can sign up, log in and create lists and tasks. The website is built using php, javascript and css.
 
 # Installation
 
