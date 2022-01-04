@@ -1,12 +1,13 @@
-INSERT MANDATORY GIF
+<img src="https://media0.giphy.com/media/2rKDe8JpAEatWVamEe/giphy.gif">
 
-# Project Title
+# Wunderlist
 
-Text about the project and why it exists. This would also be a great place to link the project online.
+This is the final project of 2021 in the web development course at Yrgo (WU21). The aim is to create a website where a user can sign up, log in and create lists and tasks. The website is built using php, javascript and css.
 
 # Installation
 
-Add the installation instructions.
+Either visit the demo here: (URL coming soon)
+Or download this repository and launch a localhost to run it locally on your machine.
 
 # Code Review
 
