@@ -42,6 +42,7 @@ function dialogues($dialogues)
 function checkUserLoginStatus()
 {
     if (is_null($_SESSION['user'])) {
+        $_SESSION['dialogues'][] = 'Please log in first.';
         redirect('/login.php');
     }
 }
