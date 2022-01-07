@@ -44,7 +44,7 @@ if (isset($_POST['email'])) {
     $emailsFound = $statement->fetchAll(PDO::FETCH_DEFAULT);
     $result = count($emailsFound);
     if ($result > 0) {
-        $_SESSION['dialogues'][] = 'The email is already registered. Please log in or register using a different email.';
+        $_SESSION['dialogues'][] = 'That email aldreay exists.';
         redirect('/signup.php');
     } else {
         $statement = $database->prepare('UPDATE users SET email = :email WHERE id = :id');

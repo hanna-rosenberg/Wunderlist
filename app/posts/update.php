@@ -34,30 +34,37 @@ if (isset($_POST['editTaskDeadline'])) {
 
 if (isset($_POST['editListSelection'])) {
     $newListId = $_POST['editListSelection'];
-    if (is_numeric($newListId)) {
-        //have to convert string to integer
-        $newListIdInt = (int)$newListId;
-        $statement = $database->prepare('UPDATE tasks SET list_id = :list_id WHERE id = :id');
-        $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
-        $statement->bindParam(':list_id', $newListIdInt, PDO::PARAM_INT);
-        $statement->execute();
-        echo 'is numeric worked';
-    } elseif ($newListId === 'removeFromList') {
-        $newListId = null;
-        $statement = $database->prepare('UPDATE tasks SET list_id = :list_id WHERE id = :id');
-        $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
-        $statement->bindParam(':list_id', $newListId, PDO::PARAM_INT);
-        $statement->execute();
-        echo 'removed from list';
-    }
 }
-
-if (isset($_POST['editTaskCompleted'])) {
-    $completed = true;
-    $statement = $database->prepare('UPDATE tasks SET completed = :completed WHERE id = :id');
+if ($newListId === 'removeFromList') {
+    $newListId = null;
+    $statement = $database->prepare('UPDATE tasks SET list_id = :list_id WHERE id = :id');
     $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
-    $statement->bindParam(':completed', $completed, PDO::PARAM_BOOL);
+    $statement->bindParam(':list_id', $newListId, PDO::PARAM_INT);
+    $statement->execute();
+} else {
+    //have to convert string to integer
+    $newListIdInt = (int)$newListId;
+    $statement = $database->prepare('UPDATE tasks SET list_id = :list_id WHERE id = :id');
+    $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
+    $statement->bindParam(':list_id', $newListIdInt, PDO::PARAM_INT);
     $statement->execute();
 }
 
-//redirect('/wunderlists.php');
+
+if (isset($_POST['editTaskCompleted'])) {
+    if (($_POST['editTaskCompleted'] === 'complete')) {
+        $completed = 1;
+        $statement = $database->prepare('UPDATE tasks SET completed = :completed WHERE id = :id');
+        $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
+        $statement->bindParam(':completed', $completed, PDO::PARAM_BOOL);
+        $statement->execute();
+    } elseif (($_POST['editTaskCompleted'] === 'incomplete')) {
+        $completed = 0;
+        $statement = $database->prepare('UPDATE tasks SET completed = :completed WHERE id = :id');
+        $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
+        $statement->bindParam(':completed', $completed, PDO::PARAM_BOOL);
+        $statement->execute();
+    }
+}
+
+redirect('/wunderlists.php');

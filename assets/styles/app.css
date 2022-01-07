@@ -1,4 +1,5 @@
 /* In this file you can add your custom styles. */
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Reenie+Beanie&display=swap');
 
 .hidden {
   display: none;
@@ -6,4 +7,41 @@
 
 .visible {
   display: block;
+}
+
+.stickyNote {
+  background-color: #fdfdc9;
+  padding: 20px;
+  margin: 20px;
+  border-style: none;
+  box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+}
+
+.permanentMarker {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 40px;
+}
+
+.amatic {
+  font-family: 'Reenie Beanie', cursive;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.editTaskButton {
+  transform: skew(-30deg);
+  -webkit-transform: skew(-30deg);
+  -ms-transform: skew(-30deg);
+  min-width: 110px;
+  background-color: #e38b92;
+  border: none;
+  border-radius: 4px;
+}
+
+.editTaskButton:hover {
+  color: white;
+}
+
+.corkBoard {
+  background-image: url(/assets/images/cork-board.jpg);
 }

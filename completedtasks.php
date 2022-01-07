@@ -11,7 +11,7 @@ checkUserLoginStatus();
 <?php
 
 $lists = fetchAllLists($database);
-$tasks = fetchAllTasks($database);
+$completed = showCompletedOnly($database);
 
 ?>
 
@@ -33,8 +33,9 @@ $tasks = fetchAllTasks($database);
             <label for="taskDeadline">Deadline</label>
             <input type="date" id="taskDeadline" name="taskDeadline"><br>
 
+            <label for="listSelection">Add task to a list (optional)</label>
             <select id="listSelection" name="listSelection">
-                <option disabled selected value>Add to list (optional)</option>
+                <option value=""> </option>
                 <?php
                 for ($i = 0; $i < count($lists); $i++) : ?>
                     <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
@@ -72,19 +73,17 @@ $tasks = fetchAllTasks($database);
             <label for="editTaskDeadline">Update task deadline</label>
             <input type="date" id="editTaskDeadline" name="editTaskDeadline">
 
+            <label for="editListSelection">Move task to list (optional)</label>
             <select id="editListSelection" name="editListSelection">
-                <option disabled selected value>Move task to list:</option>
+                <option value="keepInList"> </option>
                 <option value="removeFromList">(Remove from list)</option>
                 <?php
                 for ($i = 0; $i < count($lists); $i++) : ?>
                     <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
                 <?php endfor; ?>
             </select>
-            <select id="editTaskCompleted" name="editTaskCompleted">
-                <option disabled selected value>Mark as:</option>
-                <option value="complete">Complete</option>
-                <option value="incomplete">Incomplete</option>
-            </select>
+            <label for="editTaskCompleted">Mark as completed?</label>
+            <input type="checkbox" name="editTaskCompleted" id="editTaskCompleted" value="">
 
             <input type="hidden" id="editTaskId" name="editTaskId" class="editTaskId" value="">
 
@@ -105,84 +104,86 @@ $tasks = fetchAllTasks($database);
     <h2>Your lists:</h2>
     <ul><?php
         for ($i = 0; $i < count($lists); $i++) : ?>
-            <li class="listNames"> <a href="/lists.php?listId=<?php echo $lists[$i]['id'] ?>&listName=<?php echo $lists[$i]['title'] ?>" id="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title']; ?> </a> </li>
+            <li class="listNames"> <a href="/tasks.php?listId=<?php echo $lists[$i]['id'] ?>&listName=<?php echo $lists[$i]['title'] ?>" id="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title']; ?> </a> </li>
         <?php endfor; ?>
     </ul>
     <h2>Your tasks:</h2>
-    <h3>Show only:</h3>
+    <h3>Sort by:</h3>
 
 
 
 
 
     <form action="wunderlists.php" method="GET">
-        <p><input type="radio" id="completed" name="isComplete" value="1">
-            <label for="completed">Completed</label>
+        <p><input type="radio" id="female" name="gender" value="female">
+            <label for="female" id="radio-label">Females</label>
         </p>
-        <p><input type="radio" id="incomplete" name="isComplete" value="no">
-            <label for="incomplete">Incomplete</label>
+        <p><input type="radio" id="male" name="gender" value="male">
+            <label for="male">Males</label>
         </p>
-        <p> <input type="radio" id="all" name="isComplete" value="showAll">
+        <p> <input type="radio" id="all" name="gender" value="all">
             <label for="all">Show All</label>
         </p>
-        <select name="showListItemsOnly" class="box">
-            <option disabled selected value>Filter by list:</option>
-            <?php
-            for ($i = 0; $i < count($lists); $i++) : ?>
-                <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo $lists[$i]['title'] ?>"><?php echo $lists[$i]['title'] ?></option>
-            <?php endfor; ?>
-        </select>
 
         <select name="sort" class="box">
             <option disabled selected value>Sort by:</option>
             <option value="deadline" name="deadline">Deadline</option>
-            <option value="task" name="task">Title</option>
-            <option value="completed" name="completed">Completed</option>
+            <option value="age" name="Age">Age</option>
+            <option value="eye color" name="Eye color">Eye color</option>
+            <option value="fur color" name="Fur color">Fur color</option>
         </select>
-
-
         <button type="submit">Sort</button>
     </form>
-    <?php
-    // if the user picks a "sort by" option then the usort function will compare the value selected and return the array sorted by that value.
-    if (isset($_GET['sort'])) {
-        usort($tasks, function ($sortby, $sorted) {
-            $value = $_GET['sort'];
-            return $sortby[$value] <=> $sorted[$value];
-        });
-    }
 
-    //Add "display by" logic:
-    //display specific list
-    //display complete/incomplete only
-    //display "to be completed today" only
-    //To be completed today only
+    <p><?php
+        // if-statements looking at whether the user as selected male or female cats. "show all" does nothing which by result resets the choice to null.
+        if (isset($_GET['gender'])) {
+            if ($_GET['gender'] === 'female') {
+                $catsByGender = array_filter($cats, function ($var) use ($femaleCats) {
+                    return ($var['gender'] == $femaleCats);
+                });
 
-    ?>
+                $catsByGenderResult = array_values($catsByGender);
+                $cats = $catsByGenderResult;
+            } elseif ($_GET['gender'] === 'male') {
+                $catsByGender = array_filter($cats, function ($var) use ($maleCats) {
+                    return ($var['gender'] == $maleCats);
+                });
+
+                $catsByGenderResult = array_values($catsByGender);
+                $cats = $catsByGenderResult;
+            }
+            $gender = $_GET['gender'];
+            echo "Showing cats where gender = $gender. ";
+        }
+        // if the user picks a "sort by" option then the usort function will compare the value selected and return the array sorted by that value.
+        if (isset($_GET['sort'])) {
+            usort($tasks, function ($sortby, $sorted) {
+                $value = $_GET['sort'];
+                return $sortby[$value] <=> $sorted[$value];
+            });
+            echo "sorted by " . $_GET['sort'] . ".";
+        }
+        ?> </p>
 
 
+    Lists, Completed, Deadline, To be completed today
     <div class="container corkBoard">
         <div class="row">
             <?php
-            for ($i = 0; $i < count($tasks); $i++) : ?>
+            for ($i = 0; $i < count($completed); $i++) : ?>
                 <div class="stickyNote">
-                    <div class="col-sm permanentMarker"><b><?php echo $tasks[$i]['task'] ?></b></div>
-                    <div class="col-sm amatic"><?php echo $tasks[$i]['description'] ?></div>
-                    <div class="col-sm amatic">Deadline: <?php echo $tasks[$i]['deadline'] ?></div>
-                    <div class="col-sm amatic"> Completed: <?php
-                                                            if ($tasks[$i]['completed'] === '1') {
-                                                                echo 'Yes';
-                                                            } else {
-                                                                echo 'No';
-                                                            } ?></div>
-                    <div class="col-sm amatic">Belongs to list: <?php echo $tasks[$i]['title'] ?></div>
-                    <button class="editTaskButton" name="<?php echo $tasks[$i]['task'] ?>" id="<?php echo $tasks[$i]['task_id'] ?>" value="<?php echo $tasks[$i]['description'] ?>">Edit</button>
+                    <div class="col-sm permanentMarker"><b><?php echo $completed[$i]['task'] ?></b></div>
+                    <div class="col-sm amatic"><?php echo $completed[$i]['description'] ?></div>
+                    <div class="col-sm amatic">Deadline: <?php echo $completed[$i]['deadline'] ?></div>
+                    <div class="col-sm amatic"> Completed: <?php echo $completed[$i]['completed'] ?></div>
+                    <div class="col-sm amatic"><button class="editTaskButton" name="<?php echo $completed[$i]['task'] ?>" id="<?php echo $completed[$i]['id'] ?>" value="<?php echo $completed[$i]['description'] ?>">Edit</button></div>
                 </div>
             <?php endfor; ?>
         </div>
     </div>
 
+    <script src="assets/scripts/app.js"></script>
     <?php
-    echo '<pre>';
-    var_dump($tasks);
+    var_dump($completed);
     require __DIR__ . '/views/footer.php';

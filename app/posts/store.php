@@ -12,9 +12,11 @@ if (isset($_POST['taskName'], $_POST['taskDescription'])) {
     $taskName = trim($_POST['taskName']);
     $taskDescription = trim($_POST['taskDescription']);
     $taskDeadline = $_POST['taskDeadline'];
-    $taskCompleted = false;
+    $taskCompleted = 0;
     $userId = $_SESSION['user']['id'];
+
     $listId = $_POST['listSelection'];
+    $listIdInt = (int)$listId;
 
     $statement = $database->prepare('INSERT INTO tasks(task, description, deadline, completed, user_id, list_id) VALUES (:task, :description, :deadline, :completed, :user_id, :list_id)');
     $statement->bindParam(':task', $taskName, PDO::PARAM_STR);
