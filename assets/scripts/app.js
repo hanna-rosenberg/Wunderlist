@@ -22,6 +22,7 @@ editTaskButtons.forEach((editTaskButton) => {
   editTaskButton.addEventListener('click', () => {
     editTask.classList.remove('hidden');
     createTask.classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     taskIds.forEach((taskId) => {
       taskId.value = editTaskButton.id;

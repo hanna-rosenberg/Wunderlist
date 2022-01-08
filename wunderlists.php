@@ -109,22 +109,23 @@ $tasks = fetchAllTasks($database);
         <?php endfor; ?>
     </ul>
     <h2>Your tasks:</h2>
-    <h3>Show only:</h3>
+
 
 
 
 
 
     <form action="wunderlists.php" method="GET">
-        <p><input type="radio" id="completed" name="isComplete" value="1">
-            <label for="completed">Completed</label>
-        </p>
-        <p><input type="radio" id="incomplete" name="isComplete" value="no">
-            <label for="incomplete">Incomplete</label>
-        </p>
-        <p> <input type="radio" id="all" name="isComplete" value="showAll">
-            <label for="all">Show All</label>
-        </p>
+
+        <select name="show" class="box">
+            <option disabled selected value>Show only:</option>
+            <option value="completed" name="completed">Completed</option>
+            <option value="incomplete" name="incomplete">Incomplete</option>
+            <option value="toDoToday" name="toDoToday">To be completed today</option>
+            <option value="showAll" name="showAll">Show All</option>
+        </select>
+
+
         <select name="showListItemsOnly" class="box">
             <option disabled selected value>Filter by list:</option>
             <?php
@@ -152,11 +153,46 @@ $tasks = fetchAllTasks($database);
         });
     }
 
-    //Add "display by" logic:
-    //display specific list
-    //display complete/incomplete only
-    //display "to be completed today" only
-    //To be completed today only
+
+
+
+    // if-statements that manilpulate the tasks array to filter by complete/incomplete/todays date
+    if (isset($_GET['show'])) {
+        if ($_GET['show'] === 'completed') {
+            $tasksCompleted = array_filter($tasks, function ($var) {
+                return ($var['completed'] == '1');
+            });
+
+            $showResult = array_values($tasksCompleted);
+            $tasks = $showResult;
+        } elseif ($_GET['show'] === 'incomplete') {
+            $tasksIncomplete = array_filter($tasks, function ($var) {
+                return ($var['completed'] == '0');
+            });
+
+            $showResult = array_values($tasksIncomplete);
+            $tasks = $showResult;
+        } elseif ($_GET['show'] === 'toDoToday') {
+            $tasksToday = array_filter($tasks, function ($var) {
+                return ($var['deadline'] == date("Y-m-d"));
+            });
+
+            $showResult = array_values($tasksToday);
+            $tasks = $showResult;
+        }
+    }
+    // filter by list ID
+    if (isset($_GET['showListItemsOnly'])) {
+
+        $tasksWithListId = array_filter($tasks, function ($var) {
+            return ($var['list_id'] == $_GET['showListItemsOnly']);
+        });
+
+        $showResult = array_values($tasksWithListId);
+        $tasks = $showResult;
+    }
+
+
 
     ?>
 
