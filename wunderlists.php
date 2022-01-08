@@ -17,29 +17,38 @@ $tasks = fetchAllTasks($database);
 
 
 <div class="tasksParent">
-    <div class="createTask">
+    <div class="createTask stickyNote">
 
         <!--create task form-->
-        Create a task<br>
+        <h2 class="permanentMarker">Create task</h2>
 
         <form action="/app/posts/store.php" method="POST">
 
-            <label for="taskName">Task name</label>
-            <input type="text" id="taskName" name="taskName" required>
+            <div class="col-sm"><label for="taskName">Task name</label>
+                <input class="form-control" type="text" id="taskName" name="taskName" required>
+                <label for="taskName"><small class="form-text">Enter a name for your new task.</small></label>
+            </div>
 
-            <label for="taskDescription">Task description</label>
-            <textarea id="taskDescription" name="taskDescription" required></textarea>
+            <div class="col-sm"><label for="taskDescription">Task description</label>
+                <textarea class="form-control" id="taskDescription" name="taskDescription" required></textarea>
+                <label for="taskDescription"><small class="form-text">Enter a description for your new task.</small></label>
+            </div>
 
-            <label for="taskDeadline">Deadline</label>
-            <input type="date" id="taskDeadline" name="taskDeadline"><br>
+            <div class="col-sm"><label for="taskDeadline">Deadline</label>
+                <input class="form-control" type="date" id="taskDeadline" name="taskDeadline">
+                <label for="tasDeadline"><small class="form-text">Enter a dealine date. This is optional.</small></label>
+            </div>
 
-            <select id="listSelection" name="listSelection">
-                <option disabled selected value>Add to list (optional)</option>
-                <?php
-                for ($i = 0; $i < count($lists); $i++) : ?>
-                    <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
-                <?php endfor; ?>
-            </select>
+            <div class="col-sm"><label for="listSelection">Add to list</label>
+                <select class="form-control" id="listSelection" name="listSelection">
+                    <option disabled selected value>Add to list</option>
+                    <?php
+                    for ($i = 0; $i < count($lists); $i++) : ?>
+                        <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
+                    <?php endfor; ?>
+                </select>
+                <label for="taskName"><small class="form-text">You can add your task to a list (if you have one. This is optional).</small></label>
+            </div>
 
             <button type="submit" value="submit">Create Task</button>
         </form>
@@ -56,31 +65,31 @@ $tasks = fetchAllTasks($database);
     </form>
     <br>
 
-    <div class="editTask hidden">
-        <div id="editTaskTitle">
-            <h2>test</h2>
+    <div class="editTask stickyNote hidden">
+        <div id="editTaskTitle" class="permanentMarker">
+
         </div>
         <!--update task form-->
         <form action="/app/posts/update.php" method="POST">
 
             <label for="editTaskName">Update task name</label>
-            <input type="text" id="editTaskName" name="editTaskName" value="" required>
+            <input class="form-control" type="text" id="editTaskName" name="editTaskName" value="" required>
 
             <label for="editTaskDescription">Update task description</label>
-            <textarea id="editTaskDescription" name="editTaskDescription"></textarea>
+            <textarea class="form-control" id="editTaskDescription" name="editTaskDescription"></textarea>
 
             <label for="editTaskDeadline">Update task deadline</label>
-            <input type="date" id="editTaskDeadline" name="editTaskDeadline">
+            <input class="form-control" type="date" id="editTaskDeadline" name="editTaskDeadline" value="">
 
-            <select id="editListSelection" name="editListSelection">
+            <select class="form-control" id="editListSelection" name="editListSelection">
                 <option disabled selected value>Move task to list:</option>
-                <option value="removeFromList">(Remove from list)</option>
+                <option value="removeFromList">(Remove from current list)</option>
                 <?php
                 for ($i = 0; $i < count($lists); $i++) : ?>
                     <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
                 <?php endfor; ?>
             </select>
-            <select id="editTaskCompleted" name="editTaskCompleted">
+            <select class="form-control" id="editTaskCompleted" name="editTaskCompleted">
                 <option disabled selected value>Mark as:</option>
                 <option value="complete">Complete</option>
                 <option value="incomplete">Incomplete</option>
@@ -90,29 +99,28 @@ $tasks = fetchAllTasks($database);
 
             <button type="submit">Update Task</button>
         </form>
-        <br>Or<br>
+
         <!--delete task form-->
         <form action="/app/posts/delete.php" method="POST">
             <input type="hidden" id="taskIdtoDelete" name="taskIdToDelete" class="editTaskId" value="">
             <button type="submit" class="editTaskId" value="">Delete task</button>
         </form>
-        <br>
-        Or
-        <br>
+
         <!--cancel edit/delete task (will hide the edit and cancel forms)-->
         <button id="cancel">Cancel</button>
     </div>
-    <h2>Your lists:</h2>
-    <ul><?php
+    <select id="userLists" name="userLists">
+        <option disabled selected value>Your lists:</option>
+        <?php
         for ($i = 0; $i < count($lists); $i++) : ?>
-            <li class="listNames"> <a href="/lists.php?listId=<?php echo $lists[$i]['id'] ?>&listName=<?php echo $lists[$i]['title'] ?>" id="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title']; ?> </a> </li>
+            <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
         <?php endfor; ?>
-    </ul>
+    </select>
     <h2>Your tasks:</h2>
 
 
 
-
+    <div class="test">test</div>
 
 
     <form action="wunderlists.php" method="GET">
@@ -156,7 +164,7 @@ $tasks = fetchAllTasks($database);
 
 
 
-    // if-statements that manilpulate the tasks array to filter by complete/incomplete/todays date
+    // if-statements that manilpulate the tasks array to filter by complete/incomplete/todays date. Because showAll is not defined it will return the full list by default.
     if (isset($_GET['show'])) {
         if ($_GET['show'] === 'completed') {
             $tasksCompleted = array_filter($tasks, function ($var) {
@@ -202,17 +210,17 @@ $tasks = fetchAllTasks($database);
             <?php
             for ($i = 0; $i < count($tasks); $i++) : ?>
                 <div class="stickyNote">
-                    <div class="col-sm permanentMarker"><b><?php echo $tasks[$i]['task'] ?></b></div>
-                    <div class="col-sm amatic"><?php echo $tasks[$i]['description'] ?></div>
-                    <div class="col-sm amatic">Deadline: <?php echo $tasks[$i]['deadline'] ?></div>
+                    <div class="col-sm permanentMarker"><b><span class="title"><?php echo $tasks[$i]['task'] ?></span></b></div>
+                    <div class="col-sm amatic"><span class="description"><?php echo $tasks[$i]['description'] ?></span></div>
+                    <div class="col-sm amatic">Deadline: <span class="deadline"><?php echo $tasks[$i]['deadline'] ?></div>
                     <div class="col-sm amatic"> Completed: <?php
                                                             if ($tasks[$i]['completed'] === '1') {
                                                                 echo 'Yes';
                                                             } else {
                                                                 echo 'No';
                                                             } ?></div>
-                    <div class="col-sm amatic">Belongs to list: <?php echo $tasks[$i]['title'] ?></div>
-                    <button class="editTaskButton" name="<?php echo $tasks[$i]['task'] ?>" id="<?php echo $tasks[$i]['task_id'] ?>" value="<?php echo $tasks[$i]['description'] ?>">Edit</button>
+                    <div class="col-sm amatic">Belongs to list:<span class="list" id="<?php echo $tasks[$i]['list_id'] ?>"><?php echo $tasks[$i]['title'] ?></span></div>
+                    <button class="editTaskButton" id="<?php echo $tasks[$i]['task_id'] ?>">Edit</button>
                 </div>
             <?php endfor; ?>
         </div>

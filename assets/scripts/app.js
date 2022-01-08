@@ -17,6 +17,14 @@ const taskName = document.getElementById('editTaskName');
 // current task description
 const taskDescription = document.querySelectorAll('.taskDescription');
 
+const deadlines = document.querySelectorAll('.deadline');
+
+const editTaskDeadline = document.getElementById('editTaskDeadline');
+
+const stickyNotes = document.querySelectorAll('.stickyNote');
+
+const editListSelection = document.getElementById('editListSelection');
+
 //When clicking on Edit button under tasks this happens: Create task form goes hidden. Edit task form appears. The value of the edit button is set to the task ID and is copied to the hidden task ID value in the edit form.
 editTaskButtons.forEach((editTaskButton) => {
   editTaskButton.addEventListener('click', () => {
@@ -27,9 +35,24 @@ editTaskButtons.forEach((editTaskButton) => {
     taskIds.forEach((taskId) => {
       taskId.value = editTaskButton.id;
     });
-    editTaskTitle.innerHTML = `<h2>${editTaskButton.name}</h2>`;
-    taskName.value = editTaskButton.name;
-    editTaskDescription.innerHTML = editTaskButton.value;
+
+    stickyNotes.forEach((stickyNote) => {
+      stickyNote.addEventListener('click', function (e) {
+        if (e.target.className === 'editTaskButton') {
+          const taskName = e.target.closest('div').querySelector('.title');
+          editTaskTitle.innerHTML = taskName.innerHTML;
+          editTaskName.value = taskName.innerHTML;
+
+          const description = e.target
+            .closest('div')
+            .querySelector('.description');
+          editTaskDescription.innerHTML = description.innerHTML;
+
+          const date = e.target.closest('div').querySelector('.deadline');
+          editTaskDeadline.value = date.innerHTML;
+        }
+      });
+    });
   });
 
   cancel.addEventListener('click', () => {
