@@ -25,6 +25,14 @@ const stickyNotes = document.querySelectorAll('.stickyNote');
 
 const editListSelection = document.getElementById('editListSelection');
 
+const listIdToUpdate = document.getElementById('listIdToUpdate');
+
+const editListIds = document.querySelectorAll('.editListId');
+
+const editListButton = document.getElementById('editList');
+
+const editListName = document.getElementById('editListName');
+
 //When clicking on Edit button under tasks this happens: Create task form goes hidden. Edit task form appears. The value of the edit button is set to the task ID and is copied to the hidden task ID value in the edit form.
 editTaskButtons.forEach((editTaskButton) => {
   editTaskButton.addEventListener('click', () => {
@@ -58,5 +66,13 @@ editTaskButtons.forEach((editTaskButton) => {
   cancel.addEventListener('click', () => {
     editTask.classList.add('hidden');
     createTask.classList.remove('hidden');
+  });
+});
+
+editListButton.addEventListener('click', () => {
+  editListIds.forEach((editListId) => {
+    editListId.value = listIdToUpdate.value;
+    const listName = listIdToUpdate.options[listIdToUpdate.selectedIndex].text;
+    editListName.value = listName;
   });
 });

@@ -36,7 +36,7 @@ $tasks = fetchAllTasks($database);
 
             <div class="col-sm"><label for="taskDeadline">Deadline</label>
                 <input class="form-control" type="date" id="taskDeadline" name="taskDeadline">
-                <label for="tasDeadline"><small class="form-text">Enter a dealine date. This is optional.</small></label>
+                <label for="tasDeadline"><small class="form-text">Enter a deadline date. This is optional.</small></label>
             </div>
 
             <div class="col-sm"><label for="listSelection">Add to list</label>
@@ -53,17 +53,7 @@ $tasks = fetchAllTasks($database);
             <button type="submit" value="submit">Create Task</button>
         </form>
     </div>
-    <!--create list form-->
-    Create a list<br>
 
-    <form action="/app/posts/store.php" method="POST">
-
-        <label for="listName">List Name</label>
-        <input type="text" id="listName" name="listName" required>
-
-        <button type="submit">Create List</button>
-    </form>
-    <br>
 
     <div class="editTask stickyNote hidden">
         <div id="editTaskTitle" class="permanentMarker">
@@ -102,20 +92,56 @@ $tasks = fetchAllTasks($database);
 
         <!--delete task form-->
         <form action="/app/posts/delete.php" method="POST">
-            <input type="hidden" id="taskIdtoDelete" name="taskIdToDelete" class="editTaskId" value="">
+            <input type="hidden" id="taskIdToDelete" name="taskIdToDelete" class="editTaskId" value="">
             <button type="submit" class="editTaskId" value="">Delete task</button>
         </form>
 
-        <!--cancel edit/delete task (will hide the edit and cancel forms)-->
+        <!--cancel edit/delete task (will hide the edit and cancel task forms)-->
         <button id="cancel">Cancel</button>
     </div>
-    <select id="userLists" name="userLists">
-        <option disabled selected value>Your lists:</option>
-        <?php
-        for ($i = 0; $i < count($lists); $i++) : ?>
-            <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
-        <?php endfor; ?>
-    </select>
+
+    <!--create list form-->
+    Create a list<br>
+
+    <form action="/app/posts/store.php" method="POST">
+
+        <label for="listName">List Name</label>
+        <input type="text" id="listName" name="listName" required>
+
+        <button type="submit">Create List</button>
+    </form>
+
+    <!-- form for selecting a list to edit -->
+    <form>
+        <select id="listIdToUpdate" name="listIdToUpdate">
+            <option disabled selected value>Select a list:</option>
+            <?php
+            for ($i = 0; $i < count($lists); $i++) : ?>
+                <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
+            <?php endfor; ?>
+        </select>
+        <button type="button" id="editList">Edit list</button>
+    </form>
+
+
+    <!-- form for updating / deleting a list -->
+    <div class="editListForms">
+        <form action="/app/posts/update.php" method="POST">
+            <input type="hidden" id="listIdToUpdate" name="listIdToUpdate" class="editListId" value="">
+            <label for="editListName">List Name</label>
+            <input type="text" id="editListName" name="editListName" value="" required>
+            <button type="submit">Update list</button>
+        </form>
+        <form action="/app/posts/delete.php" method="POST">
+            <input type="hidden" id="listIdToDelete" name="listIdToDelete" class="editListId" value="">
+            <input type="checkbox" id="alsoDeleteTasks" name="alsoDeleteTasks">
+            <label for="alsoDeleteTasks">Also delete tasks associated with the list</label>
+            <button type="submit">Delete</button>
+        </form>
+        <button id="cancel">Cancel</button>
+    </div>
+
+
     <h2>Your tasks:</h2>
 
 
@@ -155,16 +181,16 @@ $tasks = fetchAllTasks($database);
     <?php
     // if the user picks a "sort by" option then the usort function will compare the value selected and return the array sorted by that value.
     if (isset($_GET['sort'])) {
-        usort($tasks, function ($sortby, $sorted) {
+        usort($tasks, function ($sortBy, $sorted) {
             $value = $_GET['sort'];
-            return $sortby[$value] <=> $sorted[$value];
+            return $sortBy[$value] <=> $sorted[$value];
         });
     }
 
 
 
 
-    // if-statements that manilpulate the tasks array to filter by complete/incomplete/todays date. Because showAll is not defined it will return the full list by default.
+    // if-statements that manipulate the tasks array to filter by complete/incomplete/today's date. Because showAll is not defined it will return the full list by default.
     if (isset($_GET['show'])) {
         if ($_GET['show'] === 'completed') {
             $tasksCompleted = array_filter($tasks, function ($var) {

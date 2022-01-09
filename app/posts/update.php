@@ -67,4 +67,13 @@ if (isset($_POST['editTaskCompleted'])) {
     }
 }
 
+if (isset($_POST['editListName'])) {
+    $listName = trim($_POST['editListName']);
+    $listId = $_POST['listIdToUpdate'];
+    $statement = $database->prepare('UPDATE lists SET title = :title WHERE id = :id');
+    $statement->bindParam(':id', $listId, PDO::PARAM_INT);
+    $statement->bindParam(':title', $listName, PDO::PARAM_STR);
+    $statement->execute();
+}
+
 redirect('/wunderlists.php');
