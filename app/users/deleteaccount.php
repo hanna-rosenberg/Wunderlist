@@ -5,25 +5,27 @@ declare(strict_types=1);
 require __DIR__ . '/../autoload.php';
 
 // Allows user to delete their account along with their lists and tasks
+//Match the password entered with the database and if successful, delete the account along with all lists and tasks associated with that account.
 
-if (isset($_POST['deleteAccount'], $_POST['email'])) {
-    $deleteMe = $_POST['deleteAccount'];
-    $emailInput = trim($_POST['email']);
+if (isset($_POST['deleteAccount'])) {
     $userId = $_SESSION['user']['id'];
-    $userEmail = $_SESSION['user']['email'];
-    //check to see that the ID fetched from the form is the same as the session ID to prevent accidents
-    if (($deleteMe === $userId) && ($emailInput === $userEmail)) {
+
+    $statement = $database->prepare('SELECT * FROM users WHERE id = :id');
+    $statement->bindParam(':id', $userId, PDO::PARAM_INT);
+    $statement->execute();
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if (password_verify($_POST['deleteAccount'], $user['password'])) {
         $statement = $database->prepare('DELETE FROM tasks WHERE user_id = :user_id');
-        $statement->bindParam(':id', $userId, PDO::PARAM_INT);
+        $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $statement->execute();
 
         $statement = $database->prepare('DELETE FROM lists WHERE user_id = :user_id');
-        $statement->bindParam(':id', $userId, PDO::PARAM_INT);
+        $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $statement->execute();
 
-        $statement = $database->prepare('DELETE FROM users WHERE email = :email AND id = :id');
+        $statement = $database->prepare('DELETE FROM users WHERE id = :id');
         $statement->bindParam(':id', $userId, PDO::PARAM_INT);
-        $statement->bindParam(':email', $userEmail, PDO::PARAM_STR);
         $statement->execute();
         unset($_SESSION['user']);
         $_SESSION['dialogues'][] = 'Your account has been deleted and you are now logged out.';

@@ -6,27 +6,35 @@ require __DIR__ . '/../autoload.php';
 
 // In this file we delete new posts in the database.
 
+//I opted to always compare the user ID to the sessions user ID in case the forms were tampered with.
+
 if (isset($_POST['taskIdToDelete'])) {
     $taskId = $_POST['taskIdToDelete'];
-    $userId = $_SESSION['user']['id'];
     $statement = $database->prepare('DELETE FROM tasks WHERE id = :id AND user_id = :user_id');
     $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
-    $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->execute();
 }
 
 if (isset($_POST['listIdToDelete'])) {
     $listId = $_POST['listIdToDelete'];
-    $userId = $_SESSION['user']['id'];
     $statement = $database->prepare('DELETE FROM lists WHERE id = :id AND user_id = :user_id');
     $statement->bindParam(':id', $listId, PDO::PARAM_INT);
-    $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->execute();
 
     if (isset($_POST['alsoDeleteTasks'])) {
         $statement = $database->prepare('DELETE FROM tasks WHERE list_id = :list_id AND user_id = :user_id');
         $statement->bindParam(':list_id', $listId, PDO::PARAM_INT);
-        $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
+        $statement->execute();
+    } else {
+        // if the user decides to delete the list but keep the tasks then set their list_id to NULL
+        $makeNull = Null;
+        $statement = $database->prepare('UPDATE tasks SET list_id = :list_id WHERE list_id = :id AND user_id = :user_id');
+        $statement->bindParam(':list_id', $makeNull, PDO::PARAM_INT);
+        $statement->bindParam(':id', $listId, PDO::PARAM_INT);
+        $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
         $statement->execute();
     }
 }

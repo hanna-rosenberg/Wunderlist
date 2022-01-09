@@ -251,8 +251,7 @@ $tasks = fetchAllTasks($database);
             <?php endfor; ?>
         </div>
     </div>
-
+    <script src="/assets/scripts/app.js"></script>
     <?php
-    echo '<pre>';
-    var_dump($tasks);
+
     require __DIR__ . '/views/footer.php';

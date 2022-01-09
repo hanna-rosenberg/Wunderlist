@@ -6,14 +6,12 @@ require __DIR__ . '/../autoload.php';
 
 // In this file we store/insert new posts in the database.
 
-
 //task logic
 if (isset($_POST['taskName'], $_POST['taskDescription'])) {
     $taskName = trim($_POST['taskName']);
     $taskDescription = trim($_POST['taskDescription']);
     $taskDeadline = $_POST['taskDeadline'];
     $taskCompleted = 0;
-    $userId = $_SESSION['user']['id'];
 
     $listId = $_POST['listSelection'];
     $listIdInt = (int)$listId;
@@ -23,7 +21,7 @@ if (isset($_POST['taskName'], $_POST['taskDescription'])) {
     $statement->bindParam(':description', $taskDescription, PDO::PARAM_STR);
     $statement->bindParam(':deadline', $taskDeadline, PDO::PARAM_STR);
     $statement->bindParam(':completed', $taskCompleted, PDO::PARAM_BOOL);
-    $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->bindParam(':list_id', $listId, PDO::PARAM_INT);
     $statement->execute();
 }
@@ -32,10 +30,9 @@ if (isset($_POST['taskName'], $_POST['taskDescription'])) {
 //list logic
 if (isset($_POST['listName'])) {
     $listName = trim($_POST['listName']);
-    $userId = $_SESSION['user']['id'];
     $statement = $database->prepare('INSERT INTO lists(title, user_id) VALUES (:title, :user_id)');
     $statement->bindParam(':title', $listName, PDO::PARAM_STR);
-    $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->execute();
 }
 

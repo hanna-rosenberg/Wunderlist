@@ -39,13 +39,13 @@ if (isset($_POST['email'])) {
     $newEmail = trim($_POST['email']);
     //check to see if the email already exists
     $statement = $database->prepare('SELECT * FROM users WHERE email = :email');
-    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->bindParam(':email', $newEmail, PDO::PARAM_STR);
     $statement->execute();
     $emailsFound = $statement->fetchAll(PDO::FETCH_DEFAULT);
     $result = count($emailsFound);
     if ($result > 0) {
-        $_SESSION['dialogues'][] = 'That email aldreay exists.';
-        redirect('/signup.php');
+        $_SESSION['dialogues'][] = 'Something went wrong. Please try again.';
+        redirect('/account.php');
     } else {
         $statement = $database->prepare('UPDATE users SET email = :email WHERE id = :id');
         $statement->bindParam(':id', $_SESSION['user']['id'], PDO::PARAM_INT);
@@ -59,13 +59,20 @@ if (isset($_POST['email'])) {
 
 
 if (isset($_POST['password'])) {
-    $newPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $statement = $database->prepare('UPDATE users SET password = :password WHERE id = :id');
-    $statement->bindParam(':id', $_SESSION['user']['id'], PDO::PARAM_INT);
-    $statement->bindParam(':password', $newPassword, PDO::PARAM_STR);
-    $statement->execute();
-    unset($user['password']);
-    $_SESSION['dialogues'][] = 'Your password has been updated.';
+    //added extra check to see that the password is 8 characters or more if in case the user manually changed the html.
+    $passwordLenght = strlen($_POST['password']);
+    if ($passwordLenght < 7) {
+        $_SESSION['dialogues'][] = 'Your need to be at least 8 characters long. Please try again.';
+        redirect('/account.php');
+    } else {
+        $newPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $statement = $database->prepare('UPDATE users SET password = :password WHERE id = :id');
+        $statement->bindParam(':id', $_SESSION['user']['id'], PDO::PARAM_INT);
+        $statement->bindParam(':password', $newPassword, PDO::PARAM_STR);
+        $statement->execute();
+        unset($user['password']);
+        $_SESSION['dialogues'][] = 'Your password has been updated.';
+    }
 }
 
 redirect('/account.php');

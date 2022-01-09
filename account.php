@@ -41,7 +41,7 @@ checkUserLoginStatus();
 <div class="mb-3">
     <form action="/app/users/updateaccount.php" method="POST">
 
-        <input class="form-control" type="password" id="password" name="password" required>
+        <input class="form-control" type="password" id="password" name="password" minlength="8" required>
         <label for="password"><small class="form-text">Enter a new password.</small></label>
         <div><button class="btn btn-primary" type="submit">Change password</button></div>
     </form>
@@ -68,10 +68,10 @@ checkUserLoginStatus();
             <h3>Delete account</h3> (this can not be undone)
         </label>
 
-        <input class="form-control" type="email" id="email" name="email" required>
-        <label for="email"><small class="form-text">Enter your email to confirm</small></label>
+        <input class="form-control" type="password" name="deleteAccount" required>
+        <label for="deleteAccount"><small class="form-text">Enter your password to confirm</small></label>
 
-        <div><button class="btn btn-primary" type="submit" name="deleteAccount" value="<?php echo $_SESSION['user']['id'] ?>">Delete my account</button></div>
+        <div><button class="btn btn-primary" type="submit">Delete my account</button></div>
     </form>
 </div>
 <br>
