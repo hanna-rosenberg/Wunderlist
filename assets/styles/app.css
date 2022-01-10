@@ -9,6 +9,16 @@
   display: block;
 }
 
+.margin10px {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.leftRightMargin1em {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
 .stickyNote {
   background-color: #fdfdc9;
   padding: 20px;
@@ -44,4 +54,5 @@
 
 .corkBoard {
   background-image: url(/assets/images/cork-board.jpg);
+  min-height: 500px;
 }

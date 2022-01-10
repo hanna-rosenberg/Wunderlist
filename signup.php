@@ -21,7 +21,7 @@ require __DIR__ . '/views/header.php';
         <input type="email" id="email" name="email" required>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" minlength="8" required>
 
         <button type="submit">Create Account</button>
     </form>
