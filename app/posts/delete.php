@@ -33,7 +33,7 @@ if (isset($_POST['listIdToDelete'])) {
         $_SESSION['successMsg'][] = 'The list and all the tasks related to it were successfully deleted.';
     } else {
         // if the user decides to delete the list but keep the tasks then set their list_id to NULL
-        $makeNull = Null;
+        $makeNull = null;
         $statement = $database->prepare('UPDATE tasks SET list_id = :list_id WHERE list_id = :id AND user_id = :user_id');
         $statement->bindParam(':list_id', $makeNull, PDO::PARAM_INT);
         $statement->bindParam(':id', $listId, PDO::PARAM_INT);

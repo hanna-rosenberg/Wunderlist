@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 function redirect(string $path)
 {
     header("Location: ${path}");
@@ -11,14 +10,7 @@ function redirect(string $path)
 
 
 function fetchAllTasks($database)
-//SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task, tasks.description, tasks.deadline, tasks.completed
-//FROM tasks
-//LEFT JOIN lists
-//ON tasks.list_id = lists.id
-//AND tasks.user_id = lists.user_id
-//WHERE tasks.user_id = 1;
 {
-    //$statement = $database->prepare('SELECT * FROM tasks LEFT JOIN lists ON tasks.list_id=lists.id AND tasks.user_id=lists.user_id WHERE tasks.user_id = :user_id');
     $statement = $database->prepare('SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task, tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id AND tasks.user_id = lists.user_id  WHERE tasks.user_id = :user_id');
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->execute();

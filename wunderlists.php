@@ -305,7 +305,6 @@ if (isset($_GET['show'])) {
 }
 // filter by list ID
 if (isset($_GET['showListItemsOnly'])) {
-
     $tasksWithListId = array_filter($tasks, function ($var) {
         return ($var['list_id'] == $_GET['showListItemsOnly']);
     });
@@ -327,12 +326,14 @@ if (isset($_GET['showListItemsOnly'])) {
                 <div class="col-sm permanentMarker"><b><span class="title"><?php echo $tasks[$i]['task'] ?></span></b></div>
                 <div class="col-sm amatic"><span class="description"><?php echo $tasks[$i]['description'] ?></span></div>
                 <div class="col-sm amatic">Deadline: <span class="deadline"><?php echo $tasks[$i]['deadline'] ?></div>
-                <div class="col-sm amatic"> Completed: <?php
-                                                        if ($tasks[$i]['completed'] === '1') {
-                                                            echo 'Yes';
-                                                        } else {
-                                                            echo 'No';
-                                                        } ?></div>
+                <div class="col-sm amatic"> Completed:
+                    <?php
+                    if ($tasks[$i]['completed'] === '1') {
+                        echo 'Yes';
+                    } else {
+                        echo 'No';
+                    } ?>
+                </div>
                 <div class="col-sm amatic">Belongs to list:<span class="list" id="<?php echo $tasks[$i]['list_id'] ?>"><?php echo $tasks[$i]['title'] ?></span></div>
                 <button class="editTaskButton" id="<?php echo $tasks[$i]['task_id'] ?>">Edit</button>
             </div>
