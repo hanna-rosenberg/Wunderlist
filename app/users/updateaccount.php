@@ -12,9 +12,7 @@ $allowedFiles = [
 
 
 if (isset($_FILES['avatar'])) {
-
     $avatar = $_FILES['avatar'];
-
     //check to see if the avatar is of the correct file type
     if (in_array($avatar['type'], $allowedFiles)) {
         //make a unique file name using date, time (including seconds) and the users unique ID along with the users file name to minimize the chance of files ending up with the same name.

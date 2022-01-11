@@ -3,7 +3,7 @@
 
 <article>
     <h1><?php echo $config['title']; ?></h1>
-    <p>Welcome!</p>
+    <p>Wunderful things happens here.</p>
     <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
     <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
     <div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>

@@ -9,6 +9,15 @@
 
         <li class="nav-item">
             <?php if (isset($_SESSION['user'])) : ?>
+                <a class="nav-link" href="/account.php">Account</a>
+            <?php else : ?>
+                <a class="nav-link <?php echo $_SERVER['SCRIPT_NAME'] === '/signup.php' ? 'active' : ''; ?>" href="signup.php">Create account</a>
+            <?php endif; ?>
+        </li>
+
+
+        <li class="nav-item">
+            <?php if (isset($_SESSION['user'])) : ?>
                 <a class="nav-link" href="/app/users/logout.php">Log out</a>
             <?php else : ?>
                 <a class="nav-link <?php echo $_SERVER['SCRIPT_NAME'] === '/login.php' ? 'active' : ''; ?>" href="login.php">Log in</a>
@@ -17,9 +26,7 @@
 
         <li class="nav-item">
             <?php if (isset($_SESSION['user'])) : ?>
-                <a class="nav-link" href="/account.php">Account</a>
-            <?php else : ?>
-                <a class="nav-link <?php echo $_SERVER['SCRIPT_NAME'] === '/signup.php' ? 'active' : ''; ?>" href="signup.php">Create account</a>
+                <a class="nav-link" href="/wunderlists.php">My Wunderlists</a>
             <?php endif; ?>
         </li>
     </ul>
