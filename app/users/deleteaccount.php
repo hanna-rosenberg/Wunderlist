@@ -28,10 +28,11 @@ if (isset($_POST['deleteAccount'])) {
         $statement->bindParam(':id', $userId, PDO::PARAM_INT);
         $statement->execute();
         unset($_SESSION['user']);
-        $_SESSION['dialogues'][] = 'Your account has been deleted and you are now logged out.';
+
+        $_SESSION['successMsg'][] = 'Your account has been deleted and you are now logged out.';
         redirect('/');
     } else {
-        $_SESSION['dialogues'][] = 'Something went wrong. The account was not deleted.';
+        $_SESSION['errorMsg'][] = 'Something went wrong. The account was not deleted.';
         redirect('/account.php');
     }
 }

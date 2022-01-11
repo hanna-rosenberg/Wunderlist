@@ -18,8 +18,11 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Login</button>
-        <?php dialogues($dialogues); ?>
+
+        <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
+        <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
+        <div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>
+        <div class="alert hidden alert-warning" role="alert"><?php warnings($warningMsg); ?></div>
     </form>
 </article>
-
 <?php require __DIR__ . '/views/footer.php'; ?>

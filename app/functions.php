@@ -36,14 +36,34 @@ function fetchAllLists($database)
     return $lists;
 }
 
-//store messages to user, such as errors and confirmation dialogues.
-function dialogues($dialogues)
+//store messages to user, such as errors and confirmation dialogues. deletes them after.
+function errors($errorMsg)
 {
-    $dialogues = $_SESSION['dialogues'];
-    foreach ($dialogues as $dialogue) {
-        echo  $dialogue;
+    $errorMsgs = $_SESSION['errorMsg'];
+
+    foreach ($errorMsgs as $errorMsg) {
+        echo  $errorMsg;
     };
-    unset($_SESSION['dialogues']);
+
+    unset($_SESSION['errorMsg']);
+}
+
+function success($successMsg)
+{
+    $successMsgs = $_SESSION['successMsg'];
+    foreach ($successMsgs as $successMsg) {
+        echo  $successMsg;
+    };
+    unset($_SESSION['successMsg']);
+}
+
+function warnings($warningMsg)
+{
+    $warningMsgs = $_SESSION['warningMsg'];
+    foreach ($warningMsgs as $warningMsg) {
+        echo  $warningMsg;
+    };
+    unset($_SESSION['warningMsg']);
 }
 
 function checkUserLoginStatus()

@@ -3,10 +3,12 @@
 
 <article>
     <h1><?php echo $config['title']; ?></h1>
-    <p>This is the home page.</p>
-
+    <p>Welcome!</p>
+    <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
+    <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
+    <div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>
+    <div class="alert hidden alert-warning" role="alert"><?php warnings($warningMsg); ?></div>
     <?php
-    dialogues($dialogues);
     if (isset($_SESSION['user'])) : ?>
         <p>Welcome, <?php echo $_SESSION['user']['name']; ?>!</p>
     <?php endif; ?>

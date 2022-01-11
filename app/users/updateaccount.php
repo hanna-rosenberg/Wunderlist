@@ -28,9 +28,9 @@ if (isset($_FILES['avatar'])) {
         $statement->bindParam(':image', $fileUrl, PDO::PARAM_STR);
         $statement->execute();
         $_SESSION['user']['image'] = $fileUrl;
-        $_SESSION['dialogues'][] = 'Your avatar has been updated.';
+        $_SESSION['successMsg'][] = 'Your avatar has been updated.';
     } else {
-        $_SESSION['dialogues'][] = 'The file must me in a jpg or png format. Please try again.';
+        $_SESSION['warningMsg'][] = 'The file must me in a jpg or png format. Please try again.';
     }
 }
 
@@ -44,7 +44,7 @@ if (isset($_POST['email'])) {
     $emailsFound = $statement->fetchAll(PDO::FETCH_DEFAULT);
     $result = count($emailsFound);
     if ($result > 0) {
-        $_SESSION['dialogues'][] = 'Something went wrong. Please try again.';
+        $_SESSION['errorMsg'][] = 'Something went wrong. Please try again.';
         redirect('/account.php');
     } else {
         $statement = $database->prepare('UPDATE users SET email = :email WHERE id = :id');
@@ -52,7 +52,7 @@ if (isset($_POST['email'])) {
         $statement->bindParam(':email', $newEmail, PDO::PARAM_STR);
         $statement->execute();
         $_SESSION['user']['email'] = $newEmail;
-        $_SESSION['dialogues'][] = 'Your email has been updated.';
+        $_SESSION['successMsg'][] = 'Your email has been updated.';
     }
 }
 
@@ -62,7 +62,7 @@ if (isset($_POST['password'])) {
     //added extra check to see that the password is 8 characters or more if in case the user manually changed the html.
     $passwordLenght = strlen($_POST['password']);
     if ($passwordLenght < 7) {
-        $_SESSION['dialogues'][] = 'Your need to be at least 8 characters long. Please try again.';
+        $_SESSION['warningMsg'][] = 'Your need to be at least 8 characters long. Please try again.';
         redirect('/account.php');
     } else {
         $newPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -71,7 +71,7 @@ if (isset($_POST['password'])) {
         $statement->bindParam(':password', $newPassword, PDO::PARAM_STR);
         $statement->execute();
         unset($user['password']);
-        $_SESSION['dialogues'][] = 'Your password has been updated.';
+        $_SESSION['successMsg'][] = 'Your password has been updated.';
     }
 }
 

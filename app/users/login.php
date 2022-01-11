@@ -19,7 +19,7 @@ if (isset($_POST['email'], $_POST['password'])) {
     // If we couldn't find the user in the database, redirect back to the login
     // page with our custom redirect function.
     if (!$user) {
-        $_SESSION['dialogues'][] = 'The login information was invalid. Please try again.';
+        $_SESSION['errorMsg'][] = 'The login information was invalid. Please try again.';
         redirect('/login.php');
     }
 
@@ -32,9 +32,9 @@ if (isset($_POST['email'], $_POST['password'])) {
             'image' => $user['image'],
             'id' => $user['id'],
         ];
-        $_SESSION['dialogues'][] = 'Successfully logged in.';
+        $_SESSION['successMsg'][] = 'Successfully logged in.';
     } else {
-        $_SESSION['dialogues'][] = 'The login information was invalid. Please try again.';
+        $_SESSION['errorMsg'][] = 'The login information was invalid. Please try again.';
         redirect('/login.php');
     }
 }

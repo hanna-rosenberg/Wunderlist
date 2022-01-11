@@ -85,4 +85,6 @@ if (isset($_POST['editListName'])) {
     $statement->execute();
 }
 
+$_SESSION['successMsg'][] = 'The task "' . $_POST['editTaskName'] . '" is updated.';
+
 redirect('/wunderlists.php');

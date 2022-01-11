@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 require __DIR__ . '/app/autoload.php';
 
 require __DIR__ . '/views/header.php';
@@ -225,11 +223,10 @@ $tasks = fetchAllTasks($database);
     <button class="btn btn-warning">Cancel</button>
 </div>
 
-
-
-
-
-
+<!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
+<div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
+<div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>
+<div class="alert hidden alert-warning" role="alert"><?php warnings($warningMsg); ?></div>
 
 
 <form action="wunderlists.php" method="GET">
@@ -268,7 +265,7 @@ $tasks = fetchAllTasks($database);
     </div>
 </form>
 
-</div>
+
 <?php
 // if the user picks a "sort by" option then the usort function will compare the value selected and return the array sorted by that value.
 if (isset($_GET['sort'])) {
@@ -342,7 +339,6 @@ if (isset($_GET['showListItemsOnly'])) {
         <?php endfor; ?>
     </div>
 </div>
-<script src="/assets/scripts/app.js"></script>
+<script src="/assets/scripts/wunderlist.js"></script>
 <?php
-var_dump($tasks);
 require __DIR__ . '/views/footer.php';
