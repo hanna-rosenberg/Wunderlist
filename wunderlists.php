@@ -276,7 +276,6 @@ $tasks = fetchAllTasks($database);
 <?php
 // if the user picks a "sort by" option then the usort function will compare the value selected and return the array sorted by that value.
 if (isset($_GET['sort'])) {
-
     usort($tasks, function ($sortBy, $sorted) {
         $value = $_GET['sort'];
         if ($_GET['sort'] === 'completed' || $_GET['sort'] === 'deadline') {
