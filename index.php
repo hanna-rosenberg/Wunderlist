@@ -2,10 +2,27 @@
 <?php require __DIR__ . '/views/header.php'; ?>
 
 <article>
-    <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
-    <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
-    <div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>
-    <div class="alert hidden alert-warning" role="alert"><?php warnings($warningMsg); ?></div>
+    <div class="alert hidden alert-success" role="alert">
+        <?php
+        if (isset($_SESSION['successMsg'])) {
+            success($successMsg);
+        }
+        ?>
+    </div>
+    <div class="alert hidden alert-danger" role="alert">
+        <?php
+        if (isset($_SESSION['errorMsg'])) {
+            success($errorMsg);
+        }
+        ?>
+    </div>
+    <div class="alert hidden alert-warning" role="alert">
+        <?php
+        if (isset($_SESSION['warningMsg'])) {
+            success($warningMsg);
+        }
+        ?>
+    </div>
     <h1><?php echo $config['title']; ?></h1>
     <?php
     if (isset($_SESSION['user'])) : ?>

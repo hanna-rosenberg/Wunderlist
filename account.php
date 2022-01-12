@@ -21,9 +21,27 @@ checkUserLoginStatus();
                     </div><br>
 
                     <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
-                    <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
-                    <div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>
-                    <div class="alert hidden alert-warning" role="alert"><?php warnings($warningMsg); ?></div>
+                    <div class="alert hidden alert-success" role="alert">
+                        <?php
+                        if (isset($_SESSION['successMsg'])) {
+                            success($successMsg);
+                        }
+                        ?>
+                    </div>
+                    <div class="alert hidden alert-danger" role="alert">
+                        <?php
+                        if (isset($_SESSION['errorMsg'])) {
+                            success($errorMsg);
+                        }
+                        ?>
+                    </div>
+                    <div class="alert hidden alert-warning" role="alert">
+                        <?php
+                        if (isset($_SESSION['warningMsg'])) {
+                            success($warningMsg);
+                        }
+                        ?>
+                    </div>
 
 
                     <!-- change email form -->

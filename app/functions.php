@@ -32,7 +32,7 @@ function fetchAllLists($database)
 function errors($errorMsg)
 {
     $errorMsgs = $_SESSION['errorMsg'];
-    if (!empty($errorMsgs)) {
+    if (isset($_SESSION['errorMsg'])) {
         foreach ($errorMsgs as $errorMsg) {
             echo  $errorMsg;
         };

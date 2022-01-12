@@ -2,7 +2,7 @@
 const alerts = document.querySelectorAll('.alert');
 
 alerts.forEach((alertMsg) => {
-  if (alertMsg.innerHTML != '') {
+  if (trim(alertMsg.innerHTML) != '') {
     alertMsg.classList.remove('hidden');
   }
 });
