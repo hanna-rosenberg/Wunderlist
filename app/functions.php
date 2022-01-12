@@ -28,10 +28,10 @@ function fetchAllLists($database): array
     return $lists;
 }
 
-function checkUserLoginStatus()
+function checkUserLoginStatus(): void
 {
     if (is_null($_SESSION['user'])) {
-        $_SESSION['dialogues'][] = 'Please log in first.';
+        $_SESSION['errorMsg'] = 'Please log in first.';
         redirect('/login.php');
     }
 }

@@ -16,8 +16,8 @@ if (isset($_POST['deleteAccount'])) {
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     if (password_verify($_POST['deleteAccount'], $user['password'])) {
-        $statement = $database->prepare('DELETE FROM tasks WHERE user_id = :user_id');
-        $statement->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $statement = $database->prepare('DELETE FROM tasks WHERE user_id = :taskUserId');
+        $statement->bindParam(':taskUserId', $userId, PDO::PARAM_INT);
         $statement->execute();
 
         $statement = $database->prepare('DELETE FROM lists WHERE user_id = :user_id');
