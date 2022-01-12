@@ -8,14 +8,12 @@
             <div class="card-body">
                 <div class="container">
 
-                    <div class="alert hidden alert-success" role="alert">
-                        <?php
-                        if (isset($_SESSION['successMsg'])) {
-                            success($successMsg);
-                        }
-                        ?>
-                    </div>
-                    <h1>Login</h1>
+                    <?php
+                    if (isset($_SESSION['successMsg'])) : ?>
+                        <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
+                    <?php endif; ?>
+
+                    <h1>Log in</h1>
 
                     <form action="/app/users/login.php" method="post">
                         <div class="mb-3">
@@ -30,24 +28,18 @@
 
                         <button type="submit" class="btn btn-primary">Log in</button>
 
-                        <div class="alert hidden alert-danger" role="alert">
-                            <?php
-                            if (isset($_SESSION['errorMsg'])) {
-                                success($errorMsg);
-                            }
-                            ?>
-                        </div>
-                        <div class="alert hidden alert-warning" role="alert">
-                            <?php
-                            if (isset($_SESSION['warningMsg'])) {
-                                success($warningMsg);
-                            }
-                            ?>
-                        </div>
-                    </form>
+                        <?php if (isset($_SESSION['errorMsg'])) : ?>
+                            <div class="alert hidden alert-danger" role="alert"><?php success($errorMsg); ?></div>
+                        <?php endif;
+                        if (isset($_SESSION['warningMsg'])) : ?>
+                            <div class="alert hidden alert-warning" role="alert"><?php success($warningMsg); ?>
+                            </div>
+                        <?php endif; ?>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 <?php require __DIR__ . '/views/footer.php'; ?>

@@ -12,36 +12,21 @@ checkUserLoginStatus();
             <div class="card-body">
                 <div class="container">
 
-                    <div class="col-sm-4 col-lg-12">
-                        <img src="<?php echo userAvatar(); ?>" width="300">
-                        <div class="ml-3 w-100">
-                            <h3 class="mb-0 mt-0"><?php echo $_SESSION['user']['name'];  ?></h3> <span><?php echo $_SESSION['user']['email'];  ?></span>
+                    <img src="<?php echo userAvatar(); ?>" width="300">
+
+                    <h3 class="mb-0 mt-0"><?php echo $_SESSION['user']['name'];  ?></h3> <span><?php echo $_SESSION['user']['email'];  ?></span><br>
+
+                    <?php
+                    if (isset($_SESSION['successMsg'])) : ?>
+                        <div class="alert alert-success" role="alert"><?php success($successMsg); ?></div>
+                    <?php endif;
+                    if (isset($_SESSION['errorMsg'])) : ?>
+                        <div class="alert alert-danger" role="alert"><?php success($errorMsg); ?></div>
+                    <?php endif;
+                    if (isset($_SESSION['warningMsg'])) : ?>
+                        <div class="alert alert-warning" role="alert"><?php success($warningMsg); ?>
                         </div>
-
-                    </div><br>
-
-                    <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
-                    <div class="alert hidden alert-success" role="alert">
-                        <?php
-                        if (isset($_SESSION['successMsg'])) {
-                            success($successMsg);
-                        }
-                        ?>
-                    </div>
-                    <div class="alert hidden alert-danger" role="alert">
-                        <?php
-                        if (isset($_SESSION['errorMsg'])) {
-                            success($errorMsg);
-                        }
-                        ?>
-                    </div>
-                    <div class="alert hidden alert-warning" role="alert">
-                        <?php
-                        if (isset($_SESSION['warningMsg'])) {
-                            success($warningMsg);
-                        }
-                        ?>
-                    </div>
+                    <?php endif; ?>
 
 
                     <!-- change email form -->

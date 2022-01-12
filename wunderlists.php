@@ -229,27 +229,18 @@ $tasks = fetchAllTasks($database);
     </div>
 </div>
 
-<div class="alert hidden alert-success" role="alert">
-    <?php
-    if (isset($_SESSION['successMsg'])) {
-        success($successMsg);
-    }
-    ?>
-</div>
-<div class="alert hidden alert-danger" role="alert">
-    <?php
-    if (isset($_SESSION['errorMsg'])) {
-        success($errorMsg);
-    }
-    ?>
-</div>
-<div class="alert hidden alert-warning" role="alert">
-    <?php
-    if (isset($_SESSION['warningMsg'])) {
-        success($warningMsg);
-    }
-    ?>
-</div>
+
+<?php
+if (isset($_SESSION['successMsg'])) : ?>
+    <div class="alert alert-success" role="alert"><?php success($successMsg); ?></div>
+<?php endif;
+if (isset($_SESSION['errorMsg'])) : ?>
+    <div class="alert alert-danger" role="alert"><?php success($errorMsg); ?></div>
+<?php endif;
+if (isset($_SESSION['warningMsg'])) : ?>
+    <div class="alert alert-warning" role="alert"><?php success($warningMsg); ?>
+    </div>
+<?php endif; ?>
 
 <form action="wunderlists.php" method="GET">
     <div class="d-flex justify-content-end">
