@@ -10,7 +10,7 @@ require __DIR__ . '/../autoload.php';
 $taskId = $_POST['editTaskId'];
 
 if (isset($_POST['editTaskName'])) {
-    $newTask = $_POST['editTaskName'];
+    $newTask = trim(filter_var($_POST['editTaskName'], FILTER_SANITIZE_STRING));
     $statement = $database->prepare('UPDATE tasks SET task = :task WHERE id = :id AND user_id = :user_id');
     $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
     $statement->bindParam(':task', $newTask, PDO::PARAM_STR);
@@ -19,7 +19,7 @@ if (isset($_POST['editTaskName'])) {
 }
 
 if (isset($_POST['editTaskDescription'])) {
-    $newTaskDescription = $_POST['editTaskDescription'];
+    $newTaskDescription = trim(filter_var($_POST['editTaskDescription'], FILTER_SANITIZE_STRING));
     $statement = $database->prepare('UPDATE tasks SET description = :description WHERE id = :id AND user_id = :user_id');
     $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
     $statement->bindParam(':description', $newTaskDescription, PDO::PARAM_STR);
@@ -28,7 +28,7 @@ if (isset($_POST['editTaskDescription'])) {
 }
 
 if (isset($_POST['editTaskDeadline'])) {
-    $newTaskDeadline = $_POST['editTaskDeadline'];
+    $newTaskDeadline = trim(filter_var($_POST['editTaskDeadline'], FILTER_SANITIZE_STRING));
     $statement = $database->prepare('UPDATE tasks SET deadline = :deadline WHERE id = :id AND user_id = :user_id');
     $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
     $statement->bindParam(':deadline', $newTaskDeadline, PDO::PARAM_STR);
@@ -37,7 +37,7 @@ if (isset($_POST['editTaskDeadline'])) {
 }
 
 if (isset($_POST['editListSelection'])) {
-    $newListId = $_POST['editListSelection'];
+    $newListId = trim(filter_var($_POST['editListSelection'], FILTER_SANITIZE_STRING));
 }
 if ($newListId === 'removeFromList') {
     $newListId = null;
@@ -76,7 +76,7 @@ if (isset($_POST['editTaskCompleted'])) {
 }
 
 if (isset($_POST['editListName'])) {
-    $listName = trim($_POST['editListName']);
+    $listName = trim(filter_var(($_POST['editListName']), FILTER_SANITIZE_STRING));
     $listId = $_POST['listIdToUpdate'];
     $statement = $database->prepare('UPDATE lists SET title = :title WHERE id = :id AND user_id = :user_id');
     $statement->bindParam(':id', $listId, PDO::PARAM_INT);

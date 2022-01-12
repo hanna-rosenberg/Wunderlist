@@ -18,7 +18,7 @@
 
         <li class="nav-item">
             <?php if (isset($_SESSION['user'])) : ?>
-                <a class="nav-link" href="/wunderlists.php">My Wunderlists</a>
+                <a class="nav-link" href="/wunderlists.php">My Stickies</a>
             <?php endif; ?>
         </li>
 

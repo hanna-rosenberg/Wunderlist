@@ -6,7 +6,8 @@ This is the final project of 2021 in the web development course at Yrgo (WU21). 
 
 # Installation
 
-Either visit the demo here: (URL coming soon)
+Either visit the demo here: https://deliciaes.com
+
 Or download this repository and launch a localhost to run it locally on your machine.
 
 # Code Review
@@ -28,5 +29,5 @@ Code review written by [Jane Doh](https://github.com/username).
 
 Tested by the following people:
 
-1. Jane Doe
-2. John Doe
+1. Agnes Skönvall
+2. Sofia Dersén

@@ -34,7 +34,7 @@ if (isset($_FILES['avatar'])) {
 
 
 if (isset($_POST['email'])) {
-    $newEmail = trim($_POST['email']);
+    $newEmail = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
     //check to see if the email already exists
     $statement = $database->prepare('SELECT * FROM users WHERE email = :email');
     $statement->bindParam(':email', $newEmail, PDO::PARAM_STR);

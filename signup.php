@@ -33,10 +33,10 @@ require __DIR__ . '/views/header.php';
                         <div class="alert alert-success" role="alert"><?php success($successMsg); ?></div>
                     <?php endif;
                     if (isset($_SESSION['errorMsg'])) : ?>
-                        <div class="alert alert-danger" role="alert"><?php success($errorMsg); ?></div>
+                        <div class="alert alert-danger" role="alert"><?php errors($errorMsg); ?></div>
                     <?php endif;
                     if (isset($_SESSION['warningMsg'])) : ?>
-                        <div class="alert alert-warning" role="alert"><?php success($warningMsg); ?>
+                        <div class="alert alert-warning" role="alert"><?php warnings($warningMsg); ?>
                         </div>
                     <?php endif; ?>
                 </div>

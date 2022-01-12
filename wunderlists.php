@@ -14,7 +14,7 @@ $tasks = fetchAllTasks($database);
 ?>
 <div class="d-flex flex-row justify-content-center">
 
-    <div class=" p-2"> <button type="button" id="showCreateTask" class="btn btn-link"><b>Create new task</b></button>
+    <div class=" p-2"> <button type="button" id="showCreateTask" class="btn btn-link"><b>Create new sticky</b></button>
     </div>
     <div class="p-2">
         <button type="button" id="showCreateList" class="btn btn-link"><b>Create new list</b></button>
@@ -32,7 +32,7 @@ $tasks = fetchAllTasks($database);
             <div class="card mt-2 mx-auto p-4 stickyNote">
                 <div class="card-body">
                     <div class="container">
-                        <h2 class="permanentMarker">Create a new task</h2>
+                        <h2 class="permanentMarker">Create a new sticky</h2>
 
                         <!--update task form-->
                         <form action="/app/posts/store.php" method="POST">
@@ -51,24 +51,24 @@ $tasks = fetchAllTasks($database);
                                 <div class="row">
                                     <div class="col-md-12">
 
-                                        <label for="taskDescription"><b>Task description</b></label>
+                                        <label for="taskDescription"><b>description</b></label>
                                         <textarea class="form-control" id="taskDescription" name="taskDescription" required></textarea>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="listSelection"><b>Add to list</b></label>
+                                        <label for="listSelection"><b>Add to a list?</b></label>
                                         <select class="form-control" id="listSelection" name="listSelection">
                                             <option disabled selected value>Add to list</option>
                                             <?php
                                             for ($i = 0; $i < count($lists); $i++) : ?>
-                                                <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
+                                                <option value="<?php echo $lists[$i]['id'] ?>"><?php echo htmlspecialchars($lists[$i]['title']) ?></option>
                                             <?php endfor; ?>
                                         </select>
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary margin10px">Create Task</button>
+                                <button type="submit" class="btn btn-primary margin10px">Create Sticky</button>
 
                             </div>
                         </form>
@@ -112,11 +112,11 @@ $tasks = fetchAllTasks($database);
                                 <div class="col-md-6">
                                     <label for="editListSelection"><b>List</b></label>
                                     <select class="form-control" id="editListSelection" name="editListSelection">
-                                        <option disabled selected value><b>Move task to list:</b></option>
+                                        <option disabled selected value><b>Move Sticky to list:</b></option>
                                         <option value="removeFromList">(Remove from current list)</option>
                                         <?php
                                         for ($i = 0; $i < count($lists); $i++) : ?>
-                                            <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
+                                            <option value="<?php echo $lists[$i]['id'] ?>"><?php echo htmlspecialchars($lists[$i]['title']) ?></option>
                                         <?php endfor; ?>
                                     </select>
                                 </div>
@@ -132,7 +132,7 @@ $tasks = fetchAllTasks($database);
 
                             <input type="hidden" id="editTaskId" name="editTaskId" class="editTaskId" value="">
                             <div class="col-sm margin10px">
-                                <button type="submit" class="btn btn-primary">Update Task</button>
+                                <button type="submit" class="btn btn-primary">Update Sticky</button>
                     </form>
                     <!--cancel edit/delete task (will hide the edit and cancel task forms)-->
                     <button type="button" class=" cancel btn btn-secondary margin10px">Cancel</button>
@@ -141,7 +141,7 @@ $tasks = fetchAllTasks($database);
 
                 <form action="/app/posts/delete.php" method="POST">
                     <input type="hidden" id="taskIdToDelete" name="taskIdToDelete" class="editTaskId" value="">
-                    <div class="col-sm"><button type="submit" class="editTaskId btn btn-danger" value="" onclick="return confirm('Are you sure? This cannot be undone.')">Delete task</button>
+                    <div class="col-sm"><button type="submit" class="editTaskId btn btn-danger" value="" onclick="return confirm('Are you sure? This cannot be undone.')">Delete sticky</button>
                     </div>
                 </form>
             </div>
@@ -189,7 +189,7 @@ $tasks = fetchAllTasks($database);
                             <option disabled selected value>Your lists:</option>
                             <?php
                             for ($i = 0; $i < count($lists); $i++) : ?>
-                                <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
+                                <option value="<?php echo $lists[$i]['id'] ?>"><?php echo htmlspecialchars($lists[$i]['title']) ?></option>
                             <?php endfor; ?>
                         </select>
                         <button type="button" id="editList" class="btn btn-primary margin10px" value="">Edit list</button>
@@ -218,7 +218,7 @@ $tasks = fetchAllTasks($database);
                     <h2 class="permanentMarker">Delete list</h2>
                     <form action="/app/posts/delete.php" method="POST">
                         <input type="hidden" id="listIdToDelete" name="listIdToDelete" class="editListId" value="">
-                        <label for="alsoDeleteTasks"><b>Optional:</b> Also delete tasks associated with the list</label>
+                        <label for="alsoDeleteTasks"><b>Optional:</b> Also delete stickies associated with the list</label>
                         <input type="checkbox" id="alsoDeleteTasks" class="form-check-label" name=" alsoDeleteTasks"><br>
                         <button type="submit" class="btn btn-danger margin10px" onclick="return confirm('Are you sure? This cannot be undone.')">Delete list</button>
                     </form>
@@ -235,10 +235,10 @@ if (isset($_SESSION['successMsg'])) : ?>
     <div class="alert alert-success" role="alert"><?php success($successMsg); ?></div>
 <?php endif;
 if (isset($_SESSION['errorMsg'])) : ?>
-    <div class="alert alert-danger" role="alert"><?php success($errorMsg); ?></div>
+    <div class="alert alert-danger" role="alert"><?php errors($errorMsg); ?></div>
 <?php endif;
 if (isset($_SESSION['warningMsg'])) : ?>
-    <div class="alert alert-warning" role="alert"><?php success($warningMsg); ?>
+    <div class="alert alert-warning" role="alert"><?php warnings($warningMsg); ?>
     </div>
 <?php endif; ?>
 
@@ -258,10 +258,10 @@ if (isset($_SESSION['warningMsg'])) : ?>
 
             <select class="form-control" name="showListItemsOnly">
                 <option disabled selected value>Filter by list:</option>
-                <option value="<?php null ?>" name="<?php null ?>">Show tasks without a list</option>
+                <option value="<?php null ?>" name="<?php null ?>">Show stickiess without a list</option>
                 <?php
                 for ($i = 0; $i < count($lists); $i++) : ?>
-                    <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo $lists[$i]['title'] ?>"><?php echo $lists[$i]['title'] ?></option>
+                    <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo htmlspecialchars($lists[$i]['title']); ?>"><?php echo htmlspecialchars($lists[$i]['title']); ?></option>
                 <?php endfor; ?>
             </select>
         </div>
@@ -343,9 +343,9 @@ if (isset($_GET['showListItemsOnly'])) {
             <?php
             for ($i = 0; $i < count($tasks); $i++) : ?>
                 <div class="stickyNote text-wrap text-break">
-                    <div class="col-sm permanentMarker margin10px"><b><span class="title"><?php echo $tasks[$i]['task'] ?></span></b></div>
-                    <div class="col-sm"><span class="description"><?php echo $tasks[$i]['description'] ?></span></div>
-                    <div class="col-sm"><b>Deadline:</b> <span class="deadline"><?php echo $tasks[$i]['deadline'] ?></div>
+                    <div class="col-sm permanentMarker margin10px"><b><span class="title"><?php echo htmlspecialchars($tasks[$i]['task']) ?></span></b></div>
+                    <div class="col-sm"><span class="description"><?php echo htmlspecialchars($tasks[$i]['description']) ?></span></div>
+                    <div class="col-sm"><b>Deadline:</b> <span class="deadline"><?php echo htmlspecialchars($tasks[$i]['deadline']) ?></div>
                     <div class="col-sm"><b>Completed:</b>
                         <?php
                         if ($tasks[$i]['completed'] === '1') {
@@ -354,9 +354,9 @@ if (isset($_GET['showListItemsOnly'])) {
                             echo 'No';
                         } ?>
                     </div>
-                    <div class="col-sm"><b>Belongs to list:</b><span class="list" id="<?php echo $tasks[$i]['list_id'] ?>"><?php echo $tasks[$i]['title'] ?></span></div>
+                    <div class="col-sm"><b>Belongs to list: </b><span class="list" id="<?php echo htmlspecialchars($tasks[$i]['list_id']) ?>"><?php echo htmlspecialchars($tasks[$i]['title']) ?></span></div>
 
-                    <button type="button" class="editTaskButton" id="<?php echo $tasks[$i]['task_id'] ?>">Edit</button>
+                    <button type="button" class="editTaskButton" id="<?php echo htmlspecialchars($tasks[$i]['task_id']) ?>">Edit</button>
                 </div>
             <?php endfor; ?>
         </div>

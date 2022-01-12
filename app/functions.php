@@ -9,7 +9,7 @@ function redirect(string $path)
 }
 
 
-function fetchAllTasks($database)
+function fetchAllTasks($database): array
 {
     $statement = $database->prepare('SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task, tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id AND tasks.user_id = lists.user_id  WHERE tasks.user_id = :user_id');
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
@@ -19,7 +19,7 @@ function fetchAllTasks($database)
 }
 
 
-function fetchAllLists($database)
+function fetchAllLists($database): array
 {
     $statement = $database->prepare('SELECT * FROM lists WHERE user_id = :user_id');
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
@@ -34,7 +34,7 @@ function errors($errorMsg)
     $errorMsgs = $_SESSION['errorMsg'];
     if (isset($errorMsgs)) {
         foreach ($errorMsgs as $errorMsg) {
-            return $errorMsg;
+            echo $errorMsg;
         };
 
         unset($_SESSION['errorMsg']);
@@ -67,7 +67,7 @@ function checkUserLoginStatus()
     }
 }
 
-function userAvatar()
+function userAvatar(): string
 {
     if (is_null($_SESSION['user']['image'])) {
         $userAvatar = '/uploads/placeholder.jpg';
@@ -77,7 +77,7 @@ function userAvatar()
     }
 }
 
-function showCompletedOnly($database)
+function showCompletedOnly($database): array
 {
     $completed = 1;
     $statement = $database->prepare('SELECT * FROM tasks WHERE user_id = :user_id AND completed = :completed');
@@ -86,15 +86,4 @@ function showCompletedOnly($database)
     $statement->execute();
     $completedTasks = $statement->fetchAll(PDO::FETCH_DEFAULT);
     return $completedTasks;
-}
-
-
-function sortBy()
-{
-    if (isset($_GET['sort'])) {
-        usort($tasks, function ($sortby, $sorted) {
-            $value = $_GET['sort'];
-            return $sortby[$value] <=> $sorted[$value];
-        });
-    }
 }

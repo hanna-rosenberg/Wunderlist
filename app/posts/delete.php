@@ -9,7 +9,7 @@ require __DIR__ . '/../autoload.php';
 //I opted to always compare the user ID to the sessions user ID in case the forms were tampered with.
 
 if (isset($_POST['taskIdToDelete'])) {
-    $taskId = $_POST['taskIdToDelete'];
+    $taskId = trim(filter_var($_POST['taskIdToDelete'], FILTER_SANITIZE_STRING));
     $statement = $database->prepare('DELETE FROM tasks WHERE id = :id AND user_id = :user_id');
     $statement->bindParam(':id', $taskId, PDO::PARAM_INT);
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
@@ -18,7 +18,7 @@ if (isset($_POST['taskIdToDelete'])) {
 }
 
 if (isset($_POST['listIdToDelete'])) {
-    $listId = $_POST['listIdToDelete'];
+    $listId = trim(filter_var($_POST['listIdToDelete'], FILTER_SANITIZE_STRING));
     $statement = $database->prepare('DELETE FROM lists WHERE id = :id AND user_id = :user_id');
     $statement->bindParam(':id', $listId, PDO::PARAM_INT);
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);

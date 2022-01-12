@@ -21,6 +21,10 @@ body {
   background-color: #52b69a;
 }
 
+.btn-primary:after {
+  background-color: orange;
+}
+
 input[type='file'] {
   display: none;
 }
