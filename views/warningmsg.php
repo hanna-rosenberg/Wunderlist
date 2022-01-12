@@ -2,7 +2,5 @@
 if (isset($_SESSION['warningMsg'])) : ?>
     <div class="alert alert-warning" role="alert">
         <?php echo $_SESSION['warningMsg'];
-        unset($_SESSION['successMsg']);
-        ?> </div>
-<?php
-endif; ?>
+        unset($_SESSION['warningMsg']);
+        ?> </div><?php endif; ?>
