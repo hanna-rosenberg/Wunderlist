@@ -17,7 +17,7 @@ if (isset($_POST['name'], $_POST['email'], $_POST['password'])) {
     $result = count($emailsFound);
 
     if ($result > 0) {
-        $_SESSION['warningMsg'][] = 'The email is already registered. Please log in or register using a different email.';
+        $_SESSION['warningMsg'] = 'The email is already registered. Please log in or register using a different email.';
         redirect('/signup.php');
     } else {
         $statement = $database->prepare('INSERT INTO users(name, email, password, image) VALUES (:name, :email, :password, :image)');
@@ -25,7 +25,7 @@ if (isset($_POST['name'], $_POST['email'], $_POST['password'])) {
         $statement->bindParam(':email', $email, PDO::PARAM_STR);
         $statement->bindParam(':password', $password, PDO::PARAM_STR);
         $statement->execute();
-        $_SESSION['successMsg'][] = 'Your account has been successfully created. Please log in.';
+        $_SESSION['successMsg'] = 'Your account has been successfully created. Please log in.';
         redirect('/login.php');
     }
 }

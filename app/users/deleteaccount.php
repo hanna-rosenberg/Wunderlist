@@ -29,10 +29,10 @@ if (isset($_POST['deleteAccount'])) {
         $statement->execute();
         unset($_SESSION['user']);
 
-        $_SESSION['successMsg'][] = 'Your account has been deleted and you are now logged out.';
+        $_SESSION['successMsg'] = 'Your account has been deleted and you are now logged out.';
         redirect('/');
     } else {
-        $_SESSION['errorMsg'][] = 'Something went wrong. The account was not deleted.';
+        $_SESSION['errorMsg'] = 'Something went wrong. The account was not deleted.';
         redirect('/account.php');
     }
 }

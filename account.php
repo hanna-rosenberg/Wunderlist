@@ -17,17 +17,10 @@ checkUserLoginStatus();
                     <h3 class="mb-0 mt-0 margin10px"><?php echo htmlspecialchars($_SESSION['user']['name']);  ?></h3> <span><?php echo htmlspecialchars($_SESSION['user']['email']);  ?></span><br>
 
                     <?php
-                    if (isset($_SESSION['successMsg'])) : ?>
-                        <div class="alert alert-success" role="alert"><?php success($successMsg); ?></div>
-                    <?php endif;
-                    if (isset($_SESSION['errorMsg'])) : ?>
-                        <div class="alert alert-danger" role="alert"><?php errors($errorMsg); ?></div>
-                    <?php endif;
-                    if (isset($_SESSION['warningMsg'])) : ?>
-                        <div class="alert alert-warning" role="alert"><?php warnings($warningMsg); ?>
-                        </div>
-                    <?php endif; ?>
-
+                    require __DIR__ . '/views/successmsg.php';
+                    require __DIR__ . '/views/errormsg.php';
+                    require __DIR__ . '/views/warningmsg.php';
+                    ?>
 
                     <!-- change email form -->
                     <div class="mb-3 margin10px">

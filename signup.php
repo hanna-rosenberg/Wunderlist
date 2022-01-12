@@ -29,16 +29,9 @@ require __DIR__ . '/views/header.php';
                     </form>
 
                     <?php
-                    if (isset($_SESSION['successMsg'])) : ?>
-                        <div class="alert alert-success" role="alert"><?php success($successMsg); ?></div>
-                    <?php endif;
-                    if (isset($_SESSION['errorMsg'])) : ?>
-                        <div class="alert alert-danger" role="alert"><?php errors($errorMsg); ?></div>
-                    <?php endif;
-                    if (isset($_SESSION['warningMsg'])) : ?>
-                        <div class="alert alert-warning" role="alert"><?php warnings($warningMsg); ?>
-                        </div>
-                    <?php endif; ?>
+                    require __DIR__ . '/views/errormsg.php';
+                    require __DIR__ . '/views/warningmsg.php';
+                    ?>
                 </div>
             </div>
         </div>

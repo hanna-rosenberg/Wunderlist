@@ -24,7 +24,7 @@ if (isset($_POST['taskName'], $_POST['taskDescription'])) {
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->bindParam(':list_id', $listId, PDO::PARAM_INT);
     $statement->execute();
-    $_SESSION['successMsg'][] = 'The task "' . $taskName . '" was successfully created.';
+    $_SESSION['successMsg'] = 'The sticky "' . $taskName . '" was successfully created.';
 }
 
 
@@ -35,7 +35,7 @@ if (isset($_POST['listName'])) {
     $statement->bindParam(':title', $listName, PDO::PARAM_STR);
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->execute();
-    $_SESSION['successMsg'][] = 'The list "' . $listName . '" was successfully created.';
+    $_SESSION['successMsg'] = 'The list "' . $listName . '" was successfully created.';
 }
 
 redirect('/wunderlists.php');

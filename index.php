@@ -4,16 +4,10 @@
 <article>
 
     <?php
-    if (isset($_SESSION['successMsg'])) : ?>
-        <div class="alert alert-success" role="alert"><?php success($successMsg); ?></div>
-    <?php endif;
-    if (isset($_SESSION['errorMsg'])) : ?>
-        <div class="alert alert-danger" role="alert"><?php errors($errorMsg); ?></div>
-    <?php endif;
-    if (isset($_SESSION['warningMsg'])) : ?>
-        <div class="alert alert-warning" role="alert"><?php warnings($warningMsg); ?>
-        </div>
-    <?php endif; ?>
+    require __DIR__ . '/views/successmsg.php';
+    require __DIR__ . '/views/errormsg.php';
+    require __DIR__ . '/views/warningmsg.php';
+    ?>
 
     <h1><?php echo $config['title']; ?></h1>
     <?php
