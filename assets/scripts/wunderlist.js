@@ -98,7 +98,7 @@ editTaskButtons.forEach((editTaskButton) => {
 
 //reader friendly button changing the font of the sticky notes
 changeFontButton.addEventListener('click', () => {
-  taskContents.classList.remove('amatic');
+  taskContents.classList.remove('reenieFont');
   taskContents.classList.add('readerFriendly');
 });
 

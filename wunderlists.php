@@ -329,28 +329,29 @@ if (isset($_GET['showListItemsOnly'])) {
 
 ?>
 
+<div class="corkBoard">
+    <div id="taskContents" class="container reenieFont">
+        <div class="row">
+            <?php
+            for ($i = 0; $i < count($tasks); $i++) : ?>
+                <div class="stickyNote text-wrap text-break">
+                    <div class="col-sm permanentMarker margin10px"><b><span class="title"><?php echo $tasks[$i]['task'] ?></span></b></div>
+                    <div class="col-sm"><span class="description"><?php echo $tasks[$i]['description'] ?></span></div>
+                    <div class="col-sm"><b>Deadline:</b> <span class="deadline"><?php echo $tasks[$i]['deadline'] ?></div>
+                    <div class="col-sm"><b>Completed:</b>
+                        <?php
+                        if ($tasks[$i]['completed'] === '1') {
+                            echo 'Yes';
+                        } else {
+                            echo 'No';
+                        } ?>
+                    </div>
+                    <div class="col-sm"><b>Belongs to list:</b><span class="list" id="<?php echo $tasks[$i]['list_id'] ?>"><?php echo $tasks[$i]['title'] ?></span></div>
 
-<div id="taskContents" class="container corkBoard amatic">
-    <div class="row">
-        <?php
-        for ($i = 0; $i < count($tasks); $i++) : ?>
-            <div class="stickyNote">
-                <div class="col-sm permanentMarker margin10px"><b><span class="title"><?php echo $tasks[$i]['task'] ?></span></b></div>
-                <div class="col-sm"><span class="description"><?php echo $tasks[$i]['description'] ?></span></div>
-                <div class="col-sm"><b>Deadline:</b> <span class="deadline"><?php echo $tasks[$i]['deadline'] ?></div>
-                <div class="col-sm"><b>Completed:</b>
-                    <?php
-                    if ($tasks[$i]['completed'] === '1') {
-                        echo 'Yes';
-                    } else {
-                        echo 'No';
-                    } ?>
+                    <button type="button" class="editTaskButton" id="<?php echo $tasks[$i]['task_id'] ?>">Edit</button>
                 </div>
-                <div class="col-sm"><b>Belongs to list:</b><span class="list" id="<?php echo $tasks[$i]['list_id'] ?>"><?php echo $tasks[$i]['title'] ?></span></div>
-
-                <button type="button" class="editTaskButton" id="<?php echo $tasks[$i]['task_id'] ?>">Edit</button>
-            </div>
-        <?php endfor; ?>
+            <?php endfor; ?>
+        </div>
     </div>
 </div>
 <script src="/assets/scripts/wunderlist.js"></script>

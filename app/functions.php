@@ -32,30 +32,35 @@ function fetchAllLists($database)
 function errors($errorMsg)
 {
     $errorMsgs = $_SESSION['errorMsg'];
+    if (!empty($errorMsgs)) {
+        foreach ($errorMsgs as $errorMsg) {
+            echo  $errorMsg;
+        };
 
-    foreach ($errorMsgs as $errorMsg) {
-        echo  $errorMsg;
-    };
-
-    unset($_SESSION['errorMsg']);
+        unset($_SESSION['errorMsg']);
+    }
 }
 
 function success($successMsg)
 {
     $successMsgs = $_SESSION['successMsg'];
-    foreach ($successMsgs as $successMsg) {
-        echo  $successMsg;
-    };
-    unset($_SESSION['successMsg']);
+    if (!empty($successMsgs)) {
+        foreach ($successMsgs as $successMsg) {
+            echo  $successMsg;
+        };
+        unset($_SESSION['successMsg']);
+    }
 }
 
 function warnings($warningMsg)
 {
-    $warningMsgs = $_SESSION['warningMsg'];
-    foreach ($warningMsgs as $warningMsg) {
-        echo  $warningMsg;
-    };
-    unset($_SESSION['warningMsg']);
+    if (!empty($warningMsgs)) {
+        $warningMsgs = $_SESSION['warningMsg'];
+        foreach ($warningMsgs as $warningMsg) {
+            echo  $warningMsg;
+        };
+        unset($_SESSION['warningMsg']);
+    }
 }
 
 function checkUserLoginStatus()

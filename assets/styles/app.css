@@ -1,5 +1,36 @@
 /* In this file you can add your custom styles. */
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Reenie+Beanie&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Permanent+Marker&family=Reenie+Beanie&family=Varela+Round&display=swap');
+
+body {
+  font-family: 'Varela Round', sans-serif;
+  background: url(/assets/images/asanoha-400px.png);
+}
+
+.navbar-custom {
+  background-color: #ef476f;
+}
+.navbar-custom a {
+  color: white;
+}
+.btn-primary {
+  background-color: #34a0a4;
+  border-color: #52b69a;
+}
+
+.btn-primary:hover {
+  background-color: #52b69a;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.fileUpload {
+  border: 1px solid rgb(150, 149, 149);
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
 .hidden {
   display: none;
@@ -32,7 +63,7 @@
   font-size: 40px;
 }
 
-.amatic {
+.reenieFont {
   font-family: 'Reenie Beanie', cursive;
   font-weight: 700;
   font-size: 30px;

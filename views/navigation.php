@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="/index.php"><?php echo $config['title']; ?></a>
 
     <ul class="navbar-nav">
