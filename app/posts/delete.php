@@ -30,7 +30,7 @@ if (isset($_POST['listIdToDelete'])) {
         $statement->bindParam(':list_id', $listId, PDO::PARAM_INT);
         $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
         $statement->execute();
-        $_SESSION['successMsg'][] = 'The list and all the tasks related to it were successfully deleted.';
+        $_SESSION['successMsg'][] = ' The tasks related to it were also successfully deleted.';
     } else {
         // if the user decides to delete the list but keep the tasks then set their list_id to NULL
         $makeNull = null;
@@ -39,7 +39,7 @@ if (isset($_POST['listIdToDelete'])) {
         $statement->bindParam(':id', $listId, PDO::PARAM_INT);
         $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
         $statement->execute();
-        $_SESSION['successMsg'][] = 'The list was successfully deleted and any related tasks no longer belongs to a list.';
+        $_SESSION['successMsg'][] = ' Any related tasks no longer belongs to a list.';
     }
 }
 

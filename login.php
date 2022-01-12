@@ -2,27 +2,36 @@
 
 <?php require __DIR__ . '/views/header.php'; ?>
 
-<article>
-    <h1>Login</h1>
-    <form action="/app/users/login.php" method="post">
-        <div class="mb-3">
-            <label for="email">Email</label>
-            <input class="form-control" type="email" name="email" id="email" placeholder="email@example.com" required>
-            <small class="form-text">Please provide the your email address.</small>
+<div class="row">
+    <div class="col-lg-7 mx-auto">
+        <div class="card mt-2 mx-auto p-4">
+            <div class="card-body">
+                <div class="container">
+
+                    <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
+                    <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
+                    <h1>Login</h1>
+
+                    <form action="/app/users/login.php" method="post">
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <input class="form-control" type="email" name="email" id="email" placeholder="email@example.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password">Password</label>
+                            <input class="form-control" type="password" name="password" id="password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Log in</button>
+
+                        <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
+                        <div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>
+                        <div class="alert hidden alert-warning" role="alert"><?php warnings($warningMsg); ?></div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label for="password">Password</label>
-            <input class="form-control" type="password" name="password" id="password" required>
-            <small class="form-text">Please provide the your password (passphrase).</small>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Login</button>
-
-        <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
-        <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
-        <div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>
-        <div class="alert hidden alert-warning" role="alert"><?php warnings($warningMsg); ?></div>
-    </form>
-</article>
+    </div>
+</div>
 <?php require __DIR__ . '/views/footer.php'; ?>

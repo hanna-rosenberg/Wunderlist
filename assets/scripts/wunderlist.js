@@ -30,6 +30,8 @@ const listIdToUpdate = document.getElementById('listIdToUpdate');
 const editListIds = document.querySelectorAll('.editListId');
 // "edit list" button
 const editListButton = document.getElementById('editList');
+// the form for editing/deleting selcted list
+const editListForm = document.querySelector('.editListForm ');
 // list name input
 const editListName = document.getElementById('editListName');
 //the "create a new task" button
@@ -40,20 +42,30 @@ const showCreateList = document.getElementById('showCreateList');
 const showEditList = document.getElementById('showEditList');
 //the "select list to edit" div
 const selectListToEdit = document.querySelector('.selectListToEdit');
+// the title in the edit list form
+const listTitle = document.getElementById('listTitle');
 // div containing "create new list" form
 const createList = document.querySelector('.createList');
+// "reader friendly" button
+const changeFontButton = document.getElementById('changeFont');
+// div wrapping the tasks containing the amatic font
+const taskContents = document.getElementById('taskContents');
 
 //When clicking on Edit button under tasks this happens: Create task form goes hidden. Edit task form appears. The value of the edit button is set to the task ID and is copied to the hidden task ID value in the edit form.
 editTaskButtons.forEach((editTaskButton) => {
   editTaskButton.addEventListener('click', () => {
     editTask.classList.remove('hidden');
     createTask.classList.add('hidden');
+    editListForm.classList.add('hidden');
+    selectListToEdit.classList.add('hidden');
+    createList.classList.add('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
+    //give each edit button the correct task ID
     taskIds.forEach((taskId) => {
       taskId.value = editTaskButton.id;
+      taskId.value = editTaskButton.id;
     });
-
+    //find the nearest title, description and deadline divs and put the content in the edit field.
     stickyNotes.forEach((stickyNote) => {
       stickyNote.addEventListener('click', function (e) {
         if (e.target.className === 'editTaskButton') {
@@ -72,19 +84,36 @@ editTaskButtons.forEach((editTaskButton) => {
       });
     });
   });
+  //cancel buttons hides all the edit forms and shows the create task form which is the default.
   cancels.forEach((cancel) => {
     cancel.addEventListener('click', () => {
-      editTask.classList.add('hidden');
       createTask.classList.remove('hidden');
+      editTask.classList.add('hidden');
+      createList.classList.add('hidden');
+      selectListToEdit.classList.add('hidden');
+      editListForm.classList.add('hidden');
     });
   });
 });
 
+//reader friendly button changing the font of the sticky notes
+changeFontButton.addEventListener('click', () => {
+  taskContents.classList.remove('amatic');
+  taskContents.classList.add('readerFriendly');
+});
+
+//event listeners on buttons to control which forms to display
 editListButton.addEventListener('click', () => {
   editListIds.forEach((editListId) => {
     editListId.value = listIdToUpdate.value;
     const listName = listIdToUpdate.options[listIdToUpdate.selectedIndex].text;
     editListName.value = listName;
+    editList.value = editListId.value;
+    if (editList.value !== '') {
+      selectListToEdit.classList.add('hidden');
+      editListForm.classList.remove('hidden');
+      listTitle.innerHTML = listName;
+    }
   });
 });
 
@@ -93,6 +122,7 @@ showCreateTask.addEventListener('click', () => {
   editTask.classList.add('hidden');
   createList.classList.add('hidden');
   selectListToEdit.classList.add('hidden');
+  editListForm.classList.add('hidden');
 });
 
 showCreateList.addEventListener('click', () => {
@@ -100,6 +130,7 @@ showCreateList.addEventListener('click', () => {
   editTask.classList.add('hidden');
   createList.classList.remove('hidden');
   selectListToEdit.classList.add('hidden');
+  editListForm.classList.add('hidden');
 });
 
 showEditList.addEventListener('click', () => {
@@ -107,4 +138,5 @@ showEditList.addEventListener('click', () => {
   createTask.classList.add('hidden');
   editTask.classList.add('hidden');
   createList.classList.add('hidden');
+  editListForm.classList.add('hidden');
 });

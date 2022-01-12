@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"><?php echo $config['title']; ?></a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/index.php"><?php echo $config['title']; ?></a>
 
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -18,15 +18,15 @@
 
         <li class="nav-item">
             <?php if (isset($_SESSION['user'])) : ?>
-                <a class="nav-link" href="/app/users/logout.php">Log out</a>
-            <?php else : ?>
-                <a class="nav-link <?php echo $_SERVER['SCRIPT_NAME'] === '/login.php' ? 'active' : ''; ?>" href="login.php">Log in</a>
+                <a class="nav-link" href="/wunderlists.php">My Wunderlists</a>
             <?php endif; ?>
         </li>
 
         <li class="nav-item">
             <?php if (isset($_SESSION['user'])) : ?>
-                <a class="nav-link" href="/wunderlists.php">My Wunderlists</a>
+                <a class="nav-link" href="/app/users/logout.php">Log out</a>
+            <?php else : ?>
+                <a class="nav-link <?php echo $_SERVER['SCRIPT_NAME'] === '/login.php' ? 'active' : ''; ?>" href="login.php">Log in</a>
             <?php endif; ?>
         </li>
     </ul>

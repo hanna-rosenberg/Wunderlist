@@ -86,8 +86,7 @@ $tasks = fetchAllTasks($database);
         <div class="card mt-2 mx-auto p-4 editTask stickyNote hidden">
             <div class="card-body">
                 <div class="container">
-                    <div id="editTaskTitle" class="permanentMarker">
-                    </div>
+                    <h2 id="editTaskTitle" class="permanentMarker"></h2>
                     <!--update task form-->
                     <form action="/app/posts/update.php" method="POST">
                         <div class="controls">
@@ -134,50 +133,22 @@ $tasks = fetchAllTasks($database);
                             <input type="hidden" id="editTaskId" name="editTaskId" class="editTaskId" value="">
                             <div class="col-sm margin10px">
                                 <button type="submit" class="btn btn-primary">Update Task</button>
-                                <!--cancel edit/delete task (will hide the edit and cancel task forms)-->
-                                <button class="btn btn-secondary margin10px">Cancel</button>
-
-                            </div>
-                            <!--delete task form-->
-
                     </form>
-                    <form action="/app/posts/delete.php" method="POST">
-                        <input type="hidden" id="taskIdToDelete" name="taskIdToDelete" class="editTaskId" value="">
-                        <div class="col-sm"><button type="submit" class="editTaskId btn btn-danger" value="">Delete task</button>
-                        </div>
-                    </form>
+                    <!--cancel edit/delete task (will hide the edit and cancel task forms)-->
+                    <button type="button" class=" cancel btn btn-secondary margin10px">Cancel</button>
                 </div>
+                <!--delete task form-->
+
+                <form action="/app/posts/delete.php" method="POST">
+                    <input type="hidden" id="taskIdToDelete" name="taskIdToDelete" class="editTaskId" value="">
+                    <div class="col-sm"><button type="submit" class="editTaskId btn btn-danger" value="" onclick="return confirm('Are you sure? This cannot be undone.')">Delete task</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 </div>
-
-
-
-
-<!-- form for selecting a list to edit -->
-<div class="row">
-    <div class="col-lg-7 mx-auto">
-        <div class="card mt-2 mx-auto p-4 stickyNote selectListToEdit hidden">
-            <div class="card-body">
-                <div class="container">
-                    <h2 class="permanentMarker">Edit list</h2>
-                    <form>
-                        <label for="listIdToUpdate"><b>Select the list you want to edit</b></label>
-                        <select id="listIdToUpdate" name="listIdToUpdate" class="form-control">
-                            <option disabled selected value>Your lists:</option>
-                            <?php
-                            for ($i = 0; $i < count($lists); $i++) : ?>
-                                <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
-                            <?php endfor; ?>
-                        </select>
-                        <button type="button" id="editList" class="btn btn-primary margin10px">Edit list</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 
@@ -205,29 +176,63 @@ $tasks = fetchAllTasks($database);
     </div>
 </div>
 
+<!-- form for selecting a list to edit -->
+<div class="row">
+    <div class="col-lg-7 mx-auto">
+        <div class="card mt-2 mx-auto p-4 stickyNote selectListToEdit hidden">
+            <div class="card-body">
+                <div class="container">
+                    <h2 class="permanentMarker">Edit list</h2>
+                    <form>
+                        <label for="listIdToUpdate"><b>Select the list you want to edit</b></label>
+                        <select id="listIdToUpdate" name="listIdToUpdate" class="form-control">
+                            <option disabled selected value>Your lists:</option>
+                            <?php
+                            for ($i = 0; $i < count($lists); $i++) : ?>
+                                <option value="<?php echo $lists[$i]['id'] ?>"><?php echo $lists[$i]['title'] ?></option>
+                            <?php endfor; ?>
+                        </select>
+                        <button type="button" id="editList" class="btn btn-primary margin10px" value="">Edit list</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- form for updating / deleting a list -->
-<div class="editListForms hidden">
-    <form action="/app/posts/update.php" method="POST">
-        <input type="hidden" id="listIdToUpdate" name="listIdToUpdate" class="editListId" value="">
-        <label for="editListName">List Name</label>
-        <input type="text" id="editListName" name="editListName" value="" required>
-        <button type="submit">Update list</button>
-    </form>
-    <form action="/app/posts/delete.php" method="POST">
-        <input type="hidden" id="listIdToDelete" name="listIdToDelete" class="editListId" value="">
-        <input type="checkbox" id="alsoDeleteTasks" name="alsoDeleteTasks">
-        <label for="alsoDeleteTasks">Also delete tasks associated with the list</label>
-        <button type="submit">Delete</button>
-    </form>
-    <button class="btn btn-warning">Cancel</button>
+<div class="row">
+    <div class="col-lg-7 mx-auto">
+        <div class="card mt-2 mx-auto p-4 stickyNote editListForm hidden">
+            <div class="card-body">
+                <div class="container">
+                    <h2 id="listTitle" class="permanentMarker"></h2>
+                    <form action="/app/posts/update.php" method="POST">
+                        <input type="hidden" id="listIdToUpdate" name="listIdToUpdate" class="editListId" value="">
+                        <label for="editListName"><b>List name</b></label>
+                        <input type="text" id="editListName" class="form-control" name="editListName" value="" required>
+                        <button type="submit" class="btn btn-primary margin10px">Update list</button>
+                    </form>
+                    <hr>
+                    <h2 class="permanentMarker">Delete list</h2>
+                    <form action="/app/posts/delete.php" method="POST">
+                        <input type="hidden" id="listIdToDelete" name="listIdToDelete" class="editListId" value="">
+                        <label for="alsoDeleteTasks"><b>Optional:</b> Also delete tasks associated with the list</label>
+                        <input type="checkbox" id="alsoDeleteTasks" class="form-check-label" name=" alsoDeleteTasks"><br>
+                        <button type="submit" class="btn btn-danger margin10px" onclick="return confirm('Are you sure? This cannot be undone.')">Delete list</button>
+                    </form>
+                    <button type="button" class="cancel btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- do not create any spaces in the below alert divs. js is looking for content to display. -->
 <div class="alert hidden alert-success" role="alert"><?php success($successMsg); ?></div>
 <div class="alert hidden alert-danger" role="alert"><?php errors($errorMsg); ?></div>
 <div class="alert hidden alert-warning" role="alert"><?php warnings($warningMsg); ?></div>
-
 
 <form action="wunderlists.php" method="GET">
     <div class="d-flex justify-content-end">
@@ -245,6 +250,7 @@ $tasks = fetchAllTasks($database);
 
             <select class="form-control" name="showListItemsOnly">
                 <option disabled selected value>Filter by list:</option>
+                <option value="<?php null ?>" name="<?php null ?>">Show tasks without a list</option>
                 <?php
                 for ($i = 0; $i < count($lists); $i++) : ?>
                     <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo $lists[$i]['title'] ?>"><?php echo $lists[$i]['title'] ?></option>
@@ -263,15 +269,22 @@ $tasks = fetchAllTasks($database);
             <button type="submit" class="btn btn-primary">Sort</button>
         </div>
     </div>
+    <div><button type="button" id="changeFont" class="btn btn-link">Reader Friendly mode</button></div>
 </form>
 
 
 <?php
 // if the user picks a "sort by" option then the usort function will compare the value selected and return the array sorted by that value.
 if (isset($_GET['sort'])) {
+
     usort($tasks, function ($sortBy, $sorted) {
         $value = $_GET['sort'];
-        return $sortBy[$value] <=> $sorted[$value];
+        if ($_GET['sort'] === 'completed' || $_GET['sort'] === 'deadline') {
+            $sorted = $sorted[$value] <=> $sortBy[$value];
+        } else {
+            $sorted = $sortBy[$value] <=> $sorted[$value];
+        }
+        return $sorted;
     });
 }
 
@@ -318,15 +331,15 @@ if (isset($_GET['showListItemsOnly'])) {
 ?>
 
 
-<div class="container corkBoard">
+<div id="taskContents" class="container corkBoard amatic">
     <div class="row">
         <?php
         for ($i = 0; $i < count($tasks); $i++) : ?>
             <div class="stickyNote">
-                <div class="col-sm permanentMarker"><b><span class="title"><?php echo $tasks[$i]['task'] ?></span></b></div>
-                <div class="col-sm amatic"><span class="description"><?php echo $tasks[$i]['description'] ?></span></div>
-                <div class="col-sm amatic">Deadline: <span class="deadline"><?php echo $tasks[$i]['deadline'] ?></div>
-                <div class="col-sm amatic"> Completed:
+                <div class="col-sm permanentMarker margin10px"><b><span class="title"><?php echo $tasks[$i]['task'] ?></span></b></div>
+                <div class="col-sm"><span class="description"><?php echo $tasks[$i]['description'] ?></span></div>
+                <div class="col-sm"><b>Deadline:</b> <span class="deadline"><?php echo $tasks[$i]['deadline'] ?></div>
+                <div class="col-sm"><b>Completed:</b>
                     <?php
                     if ($tasks[$i]['completed'] === '1') {
                         echo 'Yes';
@@ -334,8 +347,9 @@ if (isset($_GET['showListItemsOnly'])) {
                         echo 'No';
                     } ?>
                 </div>
-                <div class="col-sm amatic">Belongs to list:<span class="list" id="<?php echo $tasks[$i]['list_id'] ?>"><?php echo $tasks[$i]['title'] ?></span></div>
-                <button class="editTaskButton" id="<?php echo $tasks[$i]['task_id'] ?>">Edit</button>
+                <div class="col-sm"><b>Belongs to list:</b><span class="list" id="<?php echo $tasks[$i]['list_id'] ?>"><?php echo $tasks[$i]['title'] ?></span></div>
+
+                <button type="button" class="editTaskButton" id="<?php echo $tasks[$i]['task_id'] ?>">Edit</button>
             </div>
         <?php endfor; ?>
     </div>

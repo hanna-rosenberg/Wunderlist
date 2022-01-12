@@ -83,6 +83,8 @@ if (isset($_POST['editListName'])) {
     $statement->bindParam(':title', $listName, PDO::PARAM_STR);
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->execute();
+    $_SESSION['successMsg'][] = 'The list "' . $_POST['editListName'] . '" is updated.';
+    redirect('/wunderlists.php');
 }
 
 $_SESSION['successMsg'][] = 'The task "' . $_POST['editTaskName'] . '" is updated.';

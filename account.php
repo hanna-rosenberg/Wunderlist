@@ -75,7 +75,7 @@ checkUserLoginStatus();
         <input class="form-control" type="password" name="deleteAccount" required>
         <label for="deleteAccount"><small class="form-text">Enter your password to confirm</small></label>
 
-        <div><button class="btn btn-primary" type="submit">Delete my account</button></div>
+        <div><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure? This cannot be undone.')">Delete my account</button></div>
     </form>
 </div>
 

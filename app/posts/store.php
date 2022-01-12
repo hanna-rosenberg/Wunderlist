@@ -35,7 +35,7 @@ if (isset($_POST['listName'])) {
     $statement->bindParam(':title', $listName, PDO::PARAM_STR);
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->execute();
-    $_SESSION['successMsg'][] = 'The list "' . $taskName . '" was successfully created.';
+    $_SESSION['successMsg'][] = 'The list "' . $listName . '" was successfully created.';
 }
 
 redirect('/wunderlists.php');
