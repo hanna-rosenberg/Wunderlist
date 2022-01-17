@@ -75,6 +75,28 @@ if (isset($_POST['editTaskCompleted'])) {
     }
 }
 
+// Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod
+
+if (isset($_POST['completeAllTasks'])) {
+    $listId = $_POST['completeAllTasks'];
+    $completed = 1;
+    $statement = $database->prepare('UPDATE tasks SET completed = :completed WHERE list_id = :list_id');
+    $statement->bindParam(':list_id', $listId, PDO::PARAM_INT);
+    $statement->bindParam(':completed', $completed, PDO::PARAM_BOOL);
+    $statement->execute();
+}
+
+if (isset($_POST['completeAllTasksOnCorkboard'])) {
+    $listId = $_POST['completeAllTasksOnCorkboard'];
+    $completed = 1;
+    $statement = $database->prepare('UPDATE tasks SET completed = :completed WHERE list_id = :list_id');
+    $statement->bindParam(':list_id', $listId, PDO::PARAM_INT);
+    $statement->bindParam(':completed', $completed, PDO::PARAM_BOOL);
+    $statement->execute();
+}
+
+// Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod
+
 if (isset($_POST['editListName'])) {
     $listName = trim(filter_var(($_POST['editListName']), FILTER_SANITIZE_STRING));
     $listId = $_POST['listIdToUpdate'];

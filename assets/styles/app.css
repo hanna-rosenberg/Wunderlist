@@ -97,3 +97,22 @@ input[type='file'] {
 .readerFriendly {
   line-height: 150%;
 }
+
+button.btn.btn-primary.margin10px.Alldone {
+  margin: 30px;
+  font-size: 25px;
+  display: flex;
+  align-self: flex-end;
+}
+
+.searchContainer {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem !important;
+}
+
+.searchContainer button.btn.btn-primary.margin10px {
+  margin-top: unset;
+  margin-left: 15px;
+}

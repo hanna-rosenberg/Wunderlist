@@ -12,6 +12,7 @@ $lists = fetchAllLists($database);
 $tasks = fetchAllTasks($database);
 
 ?>
+
 <div class="d-flex flex-row justify-content-center">
 
     <div class=" p-2"> <button type="button" id="showCreateTask" class="btn btn-link"><b>Create new sticky</b></button>
@@ -208,21 +209,39 @@ $tasks = fetchAllTasks($database);
             <div class="card-body">
                 <div class="container">
                     <h2 id="listTitle" class="permanentMarker"></h2>
+
                     <form action="/app/posts/update.php" method="POST">
                         <input type="hidden" id="listIdToUpdate" name="listIdToUpdate" class="editListId" value="">
                         <label for="editListName"><b>List name</b></label>
                         <input type="text" id="editListName" class="form-control" name="editListName" value="" required>
                         <button type="submit" class="btn btn-primary margin10px">Update list</button>
-                    </form>
-                    <hr>
-                    <h2 class="permanentMarker">Delete list</h2>
-                    <form action="/app/posts/delete.php" method="POST">
-                        <input type="hidden" id="listIdToDelete" name="listIdToDelete" class="editListId" value="">
-                        <label for="alsoDeleteTasks"><b>Optional:</b> Also delete stickies associated with the list</label>
-                        <input type="checkbox" id="alsoDeleteTasks" class="form-check-label" name=" alsoDeleteTasks"><br>
-                        <button type="submit" class="btn btn-danger margin10px" onclick="return confirm('Are you sure? This cannot be undone.')">Delete list</button>
-                    </form>
-                    <button type="button" class="cancel btn btn-secondary">Cancel</button>
+
+
+
+                        <!-- Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod -->
+
+                        <form action="/app/posts/update.php" method="post">
+                            <input type="hidden" id="completeAllTasks" name="completeAllTasks" class="editListId" value="">
+                            <button type="submit" class="btn btn-primary margin10px">
+                                Mark all tasks as completed
+                            </button>
+
+                            <!-- Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod -->
+
+
+
+                        </form>
+                        <hr>
+                        <h2 class="permanentMarker">Delete list</h2>
+
+                        <form action="/app/posts/delete.php" method="POST">
+                            <input type="hidden" id="listIdToDelete" name="listIdToDelete" class="editListId" value="">
+                            <label for="alsoDeleteTasks"><b>Optional:</b> Also delete stickies associated with the list</label>
+                            <input type="checkbox" id="alsoDeleteTasks" class="form-check-label" name=" alsoDeleteTasks"><br>
+                            <button type="submit" class="btn btn-danger margin10px" onclick="return confirm('Are you sure? This cannot be undone.')">Delete list</button>
+                        </form>
+
+                        <button type="button" class="cancel btn btn-secondary">Cancel</button>
                 </div>
             </div>
         </div>
@@ -236,8 +255,21 @@ require __DIR__ . '/views/errormsg.php';
 require __DIR__ . '/views/warningmsg.php';
 ?>
 
+
+<!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
+
 <form action="wunderlists.php" method="GET">
     <div class="d-flex justify-content-end">
+        <div class="searchContainer">
+
+            <form action="wunderlists.php" method="POST">
+                <input class="form-control" type="text" id="search" name="search" required>
+                <button type="submit" class="btn btn-primary margin10px p-2">Search</button>
+            </form>
+
+        </div>
+
+        <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
         <div class="p-2">
             <select class="form-control" name="show">
                 <option disabled selected value>Show only:</option>
@@ -255,9 +287,13 @@ require __DIR__ . '/views/warningmsg.php';
                 <option value="<?php null ?>" name="<?php null ?>">Show stickiess without a list</option>
                 <?php
                 for ($i = 0; $i < count($lists); $i++) : ?>
-                    <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo htmlspecialchars($lists[$i]['title']); ?>"><?php echo htmlspecialchars($lists[$i]['title']); ?></option>
+                    <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo htmlspecialchars($lists[$i]['title']); ?>"><?php echo htmlspecialchars($lists[$i]['title']); ?>
+
+
+                    </option>
                 <?php endfor; ?>
             </select>
+
         </div>
         <div class="p-2">
             <select class="form-control" name="sort">
@@ -327,13 +363,12 @@ if (isset($_GET['showListItemsOnly'])) {
     $tasks = $showResult;
 }
 
-
-
 ?>
 
 <div class="corkBoard">
     <div id="taskContents" class="container reenieFont">
         <div class="row">
+
             <?php
             for ($i = 0; $i < count($tasks); $i++) : ?>
                 <div class="stickyNote text-wrap text-break">
@@ -342,20 +377,40 @@ if (isset($_GET['showListItemsOnly'])) {
                     <div class="col-sm"><b>Deadline:</b> <span class="deadline"><?php echo htmlspecialchars($tasks[$i]['deadline']) ?></div>
                     <div class="col-sm"><b>Completed:</b>
                         <?php
-                        if ($tasks[$i]['completed'] === '1') {
+                        if ($tasks[$i]['completed'] === '1' || $tasks[$i]['completed'] === 1) {
                             echo 'Yes';
                         } else {
                             echo 'No';
                         } ?>
                     </div>
-                    <div class="col-sm"><b>Belongs to list: </b><span class="list" id="<?php echo htmlspecialchars($tasks[$i]['list_id']) ?>"><?php echo htmlspecialchars($tasks[$i]['title']) ?></span></div>
+                    <div class="col-sm"><b>Belongs to list: </b><span class="list" id="<?php echo ($tasks[$i]['list_id']) ?>"><?php echo ($tasks[$i]['title']) ?></span></div>
 
                     <button type="button" class="editTaskButton" id="<?php echo htmlspecialchars($tasks[$i]['task_id']) ?>">Edit</button>
                 </div>
             <?php endfor; ?>
+
+            <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod  -->
+
+            <?php if (isset($_GET['showListItemsOnly'])) { ?>
+
+                <form action="/app/posts/update.php" method="post">
+                    <?php for ($i = 0; $i < count($tasks); $i++) : ?>
+                        <input type="hidden" id="completeAllTasksOnCorkboard" name="completeAllTasksOnCorkboard" value="<?php echo $tasks[$i]['id'] ?>">
+                    <?php endfor; ?>
+                    <button type="submit" class="btn btn-primary margin10px Alldone">
+                        All tasks in this list are completed!
+                    </button>
+                </form>
+
+            <?php }; ?>
+
+            <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod  -->
+
         </div>
     </div>
 </div>
+
+
 <script src="/assets/scripts/wunderlist.js"></script>
 <?php
 require __DIR__ . '/views/footer.php';
