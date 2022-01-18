@@ -258,18 +258,36 @@ require __DIR__ . '/views/warningmsg.php';
 
 <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
 
+
+<form action="wunderlists.php" method="POST">
+    <input class="form-control" type="text" id="search" name="search">
+    <button type="submit" class="btn btn-primary margin10px p-2">Search</button>
+</form>
+
+
+<?php
+if (isset($_POST['search'])) {
+
+    $searchedFor = ($_POST['search']);
+    $searchedFor = "%$searchedFor%";
+
+    $statement = $database->prepare('SELECT * FROM tasks WHERE task OR description LIKE :search AND user_id = :user_id');
+
+    $statement->bindParam(':search', $searchedFor, PDO::PARAM_STR);
+    $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
+    // die(var_dump($statement));
+    $statement->execute();
+
+    $searchedTask = $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+?>
+
+
+<!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
+
 <form action="wunderlists.php" method="GET">
     <div class="d-flex justify-content-end">
-        <div class="searchContainer">
 
-            <form action="wunderlists.php" method="POST">
-                <input class="form-control" type="text" id="search" name="search" required>
-                <button type="submit" class="btn btn-primary margin10px p-2">Search</button>
-            </form>
-
-        </div>
-
-        <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
         <div class="p-2">
             <select class="form-control" name="show">
                 <option disabled selected value>Show only:</option>
@@ -288,8 +306,6 @@ require __DIR__ . '/views/warningmsg.php';
                 <?php
                 for ($i = 0; $i < count($lists); $i++) : ?>
                     <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo htmlspecialchars($lists[$i]['title']); ?>"><?php echo htmlspecialchars($lists[$i]['title']); ?>
-
-
                     </option>
                 <?php endfor; ?>
             </select>
@@ -409,7 +425,6 @@ if (isset($_GET['showListItemsOnly'])) {
         </div>
     </div>
 </div>
-
 
 <script src="/assets/scripts/wunderlist.js"></script>
 <?php

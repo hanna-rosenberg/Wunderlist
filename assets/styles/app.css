@@ -106,7 +106,6 @@ button.btn.btn-primary.margin10px.Alldone {
 }
 
 .searchContainer {
-  width: 400px;
   display: flex;
   flex-direction: row;
   padding: 0.5rem !important;
@@ -115,4 +114,8 @@ button.btn.btn-primary.margin10px.Alldone {
 .searchContainer button.btn.btn-primary.margin10px {
   margin-top: unset;
   margin-left: 15px;
+}
+
+.formContainer {
+  display: flex;
 }
