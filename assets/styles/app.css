@@ -105,6 +105,7 @@ button.btn.btn-primary.margin10px.Alldone {
   align-self: flex-end;
 }
 
+/* Hannas styling */
 .searchContainer {
   display: flex;
   flex-direction: row;
@@ -118,4 +119,48 @@ button.btn.btn-primary.margin10px.Alldone {
 
 .formContainer {
   display: flex;
+}
+
+.completedContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.searchFormContainer {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.searchFormContainer button {
+  margin-left: 1rem;
+  height: 2rem;
+  width: 5rem;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchInput form {
+  display: flex;
+  align-items: center;
+}
+
+#search.form-control {
+  margin: 0.5rem;
+}
+
+@media screen and (min-width: 991px) {
+  .searchInput {
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+  }
+
+  .searchInput form {
+    width: 52.2vw;
+  }
 }

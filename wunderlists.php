@@ -226,11 +226,14 @@ if (isset($_GET['search'])) {
 
                         <!-- Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod -->
 
+                        <!-- Vill ha array och kolla om det finns något som är 0 och i såfall visa knappen! -->
+
                         <form action="/app/posts/update.php" method="post">
                             <input type="hidden" id="completeAllTasks" name="completeAllTasks" class="editListId" value="">
                             <button type="submit" class="btn btn-primary margin10px">
                                 Mark all tasks as completed
                             </button>
+
 
                             <!-- Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod -->
 
@@ -264,54 +267,56 @@ require __DIR__ . '/views/warningmsg.php';
 
 <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
 
-
-<form action="wunderlists.php" method="GET">
-    <input class="form-control" type="text" id="search" name="search">
-    <button type="submit" class="btn btn-primary margin10px p-2">Search</button>
-</form>
-
-
-<!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
-
-<form action="wunderlists.php" method="GET">
-    <div class="d-flex justify-content-end">
-
-        <div class="p-2">
-            <select class="form-control" name="show">
-                <option disabled selected value>Show only:</option>
-                <option value="completed" name="completed">Completed</option>
-                <option value="incomplete" name="incomplete">Incomplete</option>
-                <option value="toDoToday" name="toDoToday">To be completed today</option>
-                <option value="showAll" name="showAll">Show All</option>
-            </select>
-        </div>
-
-        <div class="p-2">
-
-            <select class="form-control" name="showListItemsOnly">
-                <option disabled selected value>Filter by list:</option>
-                <option value="<?php null ?>" name="<?php null ?>">Show stickiess without a list</option>
-                <?php
-                for ($i = 0; $i < count($lists); $i++) : ?>
-                    <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo htmlspecialchars($lists[$i]['title']); ?>"><?php echo htmlspecialchars($lists[$i]['title']); ?>
-                    </option>
-                <?php endfor; ?>
-            </select>
-
-        </div>
-        <div class="p-2">
-            <select class="form-control" name="sort">
-                <option disabled selected value>Sort by:</option>
-                <option value="deadline" name="deadline">Deadline</option>
-                <option value="task" name="task">Title</option>
-                <option value="completed" name="completed">Completed</option>
-            </select>
-        </div>
-        <div class="p-2">
-            <button type="submit" class="btn btn-primary">Sort</button>
-        </div>
+<div class="searchFormContainer">
+    <div class="searchInput">
+        <form action="wunderlists.php" method="GET">
+            <input class="form-control" type="text" id="search" name="search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
     </div>
-    <div><button type="button" id="changeFont" class="btn btn-link">Reader Friendly mode</button></div>
+
+    <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
+
+    <form action="wunderlists.php" method="GET">
+        <div class="d-flex justify-content-end">
+
+            <div class="p-2">
+                <select class="form-control" name="show">
+                    <option disabled selected value>Show only:</option>
+                    <option value="completed" name="completed">Completed</option>
+                    <option value="incomplete" name="incomplete">Incomplete</option>
+                    <option value="toDoToday" name="toDoToday">To be completed today</option>
+                    <option value="showAll" name="showAll">Show All</option>
+                </select>
+            </div>
+
+            <div class="p-2">
+
+                <select class="form-control" name="showListItemsOnly">
+                    <option disabled selected value>Filter by list:</option>
+                    <option value="<?php null ?>" name="<?php null ?>">Show stickiess without a list</option>
+                    <?php
+                    for ($i = 0; $i < count($lists); $i++) : ?>
+                        <option value="<?php echo $lists[$i]['id'] ?>" name="<?php echo htmlspecialchars($lists[$i]['title']); ?>"><?php echo htmlspecialchars($lists[$i]['title']); ?>
+                        </option>
+                    <?php endfor; ?>
+                </select>
+
+            </div>
+            <div class="p-2">
+                <select class="form-control" name="sort">
+                    <option disabled selected value>Sort by:</option>
+                    <option value="deadline" name="deadline">Deadline</option>
+                    <option value="task" name="task">Title</option>
+                    <option value="completed" name="completed">Completed</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary"> Sort </button>
+
+        </div>
+</div>
+<div><button type="button" id="changeFont" class="btn btn-link">Reader Friendly mode</button></div>
 </form>
 
 
@@ -395,18 +400,20 @@ if (isset($_GET['showListItemsOnly'])) {
 
             <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod  -->
 
-            <?php if (isset($_GET['showListItemsOnly'])) { ?>
+            <div class="completedContainer">
+                <?php if (isset($_GET['showListItemsOnly'])) { ?>
 
-                <form action="/app/posts/update.php" method="post">
-                    <?php for ($i = 0; $i < count($tasks); $i++) : ?>
-                        <input type="hidden" id="completeAllTasksOnCorkboard" name="completeAllTasksOnCorkboard" value="<?php echo $tasks[$i]['id'] ?>">
-                    <?php endfor; ?>
-                    <button type="submit" class="btn btn-primary margin10px Alldone">
-                        All tasks in this list are completed!
-                    </button>
-                </form>
+                    <form action="/app/posts/update.php" method="post">
+                        <?php for ($i = 0; $i < count($tasks); $i++) : ?>
+                            <input type="hidden" id="completeAllTasksOnCorkboard" name="completeAllTasksOnCorkboard" value="<?php echo $tasks[$i]['id'] ?>">
+                        <?php endfor; ?>
+                        <button type="submit" class="btn btn-primary margin10px Alldone">
+                            Mark all tasks as completed!
+                        </button>
+                    </form>
 
-            <?php }; ?>
+                <?php }; ?>
+            </div>
 
             <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod  -->
 
