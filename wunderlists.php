@@ -9,7 +9,13 @@ checkUserLoginStatus();
 <?php
 
 $lists = fetchAllLists($database);
-$tasks = fetchAllTasks($database);
+// $tasks = fetchAllTasks($database);
+
+if (isset($_GET['search'])) {
+    $tasks = searchTask($database, $_GET['search']);
+} else {
+    $tasks = fetchAllTasks($database);
+}
 
 ?>
 
@@ -259,28 +265,10 @@ require __DIR__ . '/views/warningmsg.php';
 <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
 
 
-<form action="wunderlists.php" method="POST">
+<form action="wunderlists.php" method="GET">
     <input class="form-control" type="text" id="search" name="search">
     <button type="submit" class="btn btn-primary margin10px p-2">Search</button>
 </form>
-
-
-<?php
-if (isset($_POST['search'])) {
-
-    $searchedFor = ($_POST['search']);
-    $searchedFor = "%$searchedFor%";
-
-    $statement = $database->prepare('SELECT * FROM tasks WHERE task OR description LIKE :search AND user_id = :user_id');
-
-    $statement->bindParam(':search', $searchedFor, PDO::PARAM_STR);
-    $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
-    // die(var_dump($statement));
-    $statement->execute();
-
-    $searchedTask = $statement->fetchAll(PDO::FETCH_ASSOC);
-}
-?>
 
 
 <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
