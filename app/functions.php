@@ -25,32 +25,18 @@ function searchTask($database, $search): array
 {
     $user = $_SESSION['user']['id'];
     $searchedFor = "%$search%";
+
     $statement = $database->prepare('SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task,
-    tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id WHERE task
-    LIKE :search OR description LIKE :search OR title LIKE :search AND tasks.user_id = :user_id');
+    tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id WHERE (task
+    LIKE :search OR description LIKE :search OR title LIKE :search ) AND tasks.user_id = :user_id');
+
     $statement->bindParam(':search', $searchedFor, PDO::PARAM_STR);
     $statement->bindParam(':user_id', $user, PDO::PARAM_INT);
     $statement->execute();
+
     $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $tasks;
 }
-
-//Denna kod hittar allt utom description, men är kopplad till rätt user. JÄTTEKONSTIGT!!? Funkar ju att få ut description ovan, men då funkar inte user_id..
-// function searchTask($database, $search): array
-// {
-//     $user = $_SESSION['user']['id'];
-//     $searchedFor = "%$search%";
-
-//     $statement = $database->prepare('SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task, tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id WHERE task LIKE :search AND tasks.user_id = :user_id');
-//     $statement = $database->prepare('SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task, tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id WHERE description LIKE :search AND tasks.user_id = :user_id');
-//     $statement = $database->prepare('SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task, tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id WHERE title LIKE :search AND tasks.user_id = :user_id');
-
-//     $statement->bindParam(':search', $searchedFor, PDO::PARAM_STR);
-//     $statement->bindParam(':user_id', $user, PDO::PARAM_INT);
-//     $statement->execute();
-//     $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
-//     return $tasks;
-// }
 
 // Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod
 
