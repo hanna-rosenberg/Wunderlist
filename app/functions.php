@@ -14,6 +14,7 @@ function fetchAllTasks($database): array
     $statement = $database->prepare('SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task, tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id AND tasks.user_id = lists.user_id  WHERE tasks.user_id = :user_id');
     $statement->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $statement->execute();
+
     $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $tasks;
 }
@@ -24,13 +25,13 @@ function fetchAllTasks($database): array
 function searchTask($database, $search): array
 {
     $user = $_SESSION['user']['id'];
-    $searchedFor = "%$search%";
+    $search = "%$search%";
 
     $statement = $database->prepare('SELECT lists.id, title, tasks.id AS task_id, tasks.user_id, tasks.list_id, tasks.task,
     tasks.description, tasks.deadline, tasks.completed FROM tasks LEFT JOIN lists ON tasks.list_id = lists.id WHERE (task
     LIKE :search OR description LIKE :search OR title LIKE :search ) AND tasks.user_id = :user_id');
 
-    $statement->bindParam(':search', $searchedFor, PDO::PARAM_STR);
+    $statement->bindParam(':search', $search, PDO::PARAM_STR);
     $statement->bindParam(':user_id', $user, PDO::PARAM_INT);
     $statement->execute();
 

@@ -9,7 +9,6 @@ checkUserLoginStatus();
 <?php
 
 $lists = fetchAllLists($database);
-// $tasks = fetchAllTasks($database);
 
 if (isset($_GET['search'])) {
     $tasks = searchTask($database, $_GET['search']);
@@ -195,9 +194,12 @@ if (isset($_GET['search'])) {
                         <select id="listIdToUpdate" name="listIdToUpdate" class="form-control">
                             <option disabled selected value>Your lists:</option>
                             <?php
+
+
                             for ($i = 0; $i < count($lists); $i++) : ?>
                                 <option value="<?php echo $lists[$i]['id'] ?>"><?php echo htmlspecialchars($lists[$i]['title']) ?></option>
                             <?php endfor; ?>
+
                         </select>
                         <button type="button" id="editList" class="btn btn-primary margin10px" value="">Edit list</button>
                     </form>
@@ -223,23 +225,16 @@ if (isset($_GET['search'])) {
                         <button type="submit" class="btn btn-primary margin10px">Update list</button>
 
 
-
-                        <!-- Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod -->
-
-                        <!-- Vill ha array och kolla om det finns något som är 0 och i såfall visa knappen! -->
-
+                        <!-- If the user has created tasks, this button is visible when editing lists. When pressing the button, all tasks in the choosen list becomes completed in the database -->
                         <form action="/app/posts/update.php" method="post">
-                            <input type="hidden" id="completeAllTasks" name="completeAllTasks" class="editListId" value="">
-                            <button type="submit" class="btn btn-primary margin10px">
-                                Mark all tasks as completed
-                            </button>
-
-
-                            <!-- Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod -->
-
-
-
+                            <?php if (count($tasks) > 0) : ?>
+                                <input type="hidden" id="completeAllTasks" name="completeAllTasks" class="editListId" value="">
+                                <button type="submit" class="btn btn-primary margin10px">
+                                    Mark all tasks as completed
+                                </button>
+                            <?php endif; ?>
                         </form>
+
                         <hr>
                         <h2 class="permanentMarker">Delete list</h2>
 
@@ -264,9 +259,7 @@ require __DIR__ . '/views/errormsg.php';
 require __DIR__ . '/views/warningmsg.php';
 ?>
 
-
-<!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
-
+<!-- Search-form -->
 <div class="searchFormContainer">
     <div class="searchInput">
         <form action="wunderlists.php" method="GET">
@@ -275,7 +268,6 @@ require __DIR__ . '/views/warningmsg.php';
         </form>
     </div>
 
-    <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod -->
 
     <form action="wunderlists.php" method="GET">
         <div class="d-flex justify-content-end">
@@ -398,25 +390,29 @@ if (isset($_GET['showListItemsOnly'])) {
                 </div>
             <?php endfor; ?>
 
-            <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod  -->
-
+            <!-- When the user "Sort by list" there is another button that completes all tasks in the choosen list. The button is only visable if there are tasks that are'nt completed in the list shown -->
             <div class="completedContainer">
-                <?php if (isset($_GET['showListItemsOnly'])) { ?>
 
-                    <form action="/app/posts/update.php" method="post">
-                        <?php for ($i = 0; $i < count($tasks); $i++) : ?>
-                            <input type="hidden" id="completeAllTasksOnCorkboard" name="completeAllTasksOnCorkboard" value="<?php echo $tasks[$i]['id'] ?>">
-                        <?php endfor; ?>
-                        <button type="submit" class="btn btn-primary margin10px Alldone">
-                            Mark all tasks as completed!
-                        </button>
-                    </form>
+                <?php
+                for ($i = 0; $i < count($tasks); $i++) :
+                    if ($tasks[$i]['completed'] === '0' || $tasks[$i]['completed'] === 0) { ?>
 
-                <?php }; ?>
+
+                        <?php if (isset($_GET['showListItemsOnly'])) { ?>
+
+                            <form action="/app/posts/update.php" method="post">
+                                <?php for ($i = 0; $i < count($tasks); $i++) : ?>
+                                    <input type="hidden" id="completeAllTasksOnCorkboard" name="completeAllTasksOnCorkboard" value="<?php echo $tasks[$i]['id'] ?>">
+                                <?php endfor; ?>
+
+                                <button type="submit" class="btn btn-primary margin10px Alldone">
+                                    Mark all tasks as completed!
+                                </button>
+                            </form>
+                        <?php }; ?>
+                    <?php }; ?>
+                <?php endfor; ?>
             </div>
-
-            <!-- Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod Hannas kod  -->
-
         </div>
     </div>
 </div>

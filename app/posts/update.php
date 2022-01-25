@@ -77,8 +77,6 @@ if (isset($_POST['editTaskCompleted'])) {
 
 $_SESSION['successMsg'] = 'The sticky "' . $_POST['editTaskName'] . '" is updated.';
 
-// Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod
-
 if (isset($_POST['completeAllTasks'])) {
     $listId = $_POST['completeAllTasks'];
     $completed = 1;
@@ -96,10 +94,8 @@ if (isset($_POST['completeAllTasksOnCorkboard'])) {
     $statement->bindParam(':completed', $completed, PDO::PARAM_BOOL);
     $statement->execute();
 
-    $_SESSION['successMsg'] = 'Everything in "' . $lists['title'] . '" is marked as completed.';
+    $_SESSION['successMsg'] = 'Everything in this list is marked as completed.';
 }
-
-// Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod Hannas kod Hannas kod Hanns kod
 
 if (isset($_POST['editListName'])) {
     $listName = trim(filter_var(($_POST['editListName']), FILTER_SANITIZE_STRING));
@@ -112,6 +108,5 @@ if (isset($_POST['editListName'])) {
     $_SESSION['successMsg'] = 'The list "' . $_POST['editListName'] . '" is updated.';
     redirect('/wunderlists.php');
 }
-
 
 redirect('/wunderlists.php');
