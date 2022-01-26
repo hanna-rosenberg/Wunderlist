@@ -397,10 +397,7 @@ if (isset($_GET['showListItemsOnly'])) {
                 <?php
                 for ($i = 0; $i < count($tasks); $i++) :
                     if ($tasks[$i]['completed'] === '0' || $tasks[$i]['completed'] === 0) { ?>
-
-
                         <?php if (isset($_GET['showListItemsOnly'])) { ?>
-
                             <form action="/app/posts/update.php" method="post">
                                 <?php for ($i = 0; $i < count($tasks); $i++) : ?>
                                     <input type="hidden" id="completeAllTasksOnCorkboard" name="completeAllTasksOnCorkboard" value="<?php echo $tasks[$i]['id'] ?>">
