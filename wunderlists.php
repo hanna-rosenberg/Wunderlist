@@ -18,6 +18,7 @@ if (isset($_GET['search'])) {
 
 ?>
 
+
 <div class="d-flex flex-row justify-content-center">
 
     <div class=" p-2"> <button type="button" id="showCreateTask" class="btn btn-link"><b>Create new sticky</b></button>
