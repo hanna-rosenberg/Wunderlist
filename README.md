@@ -47,3 +47,12 @@ Tested by the following people:
 
 1. Agnes Skönvall
 2. Sofia Dersén
+
+# Wunderlist+
+
+[Hanna Rosenberg](https://github.com/hanna-rosenberg) added:
+
+1. Ability to mark all tasks in a list as completed.
+2. Ability to search tasks.
+
+See the Pull requests [here!](https://github.com/Deliciaes/Wunderlist/pull/6)
